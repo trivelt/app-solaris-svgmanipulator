@@ -21,10 +21,10 @@ class Device:
         pass
 
     def isRingElement(self):
-        return self.getSectionName().startswith("R")
+        return self.getSectionName().startswith("R1-")
 
     def isLinacElement(self):
-        return self.getSectionName().startswith("I")
+        return self.getSectionName().startswith("I-")
 
     def getSectionName(self):
         nameParts = self.name.split("/")

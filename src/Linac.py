@@ -6,12 +6,12 @@ class Linac:
         self.width = 6778.519
         LinacSection.id = 1
 
-    def addSection(self, name, colour=None):
+    def addSection(self, name, colour=None, width=630):
         print("[Linac::addSection] Adding new section " + str(name))
         if colour == None:
             colour = self.getNextSectionColour()
         coordinate = self.computeNewSectionCoordinate()
-        newSection = LinacSection(name, colour, coordinate)
+        newSection = LinacSection(name, colour, coordinate, width)
         self.sections.append(newSection)
 
     def addLastLongSection(self):

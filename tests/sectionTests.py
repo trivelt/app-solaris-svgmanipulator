@@ -35,7 +35,7 @@ class TestSectionBase(unittest.TestCase):
         svgFile = svg.SVG()
         svgFile.setSvg(svgRoot)
 
-        zoom1 = findZoom1Background(svgRoot)
+        zoom1 = svgFile.getZoom1Background()
         zoom1Old = etree.tostring(zoom1)
 
         section = LinacSection(self.name, self.colour, self.coord, self.width)
@@ -49,7 +49,7 @@ class TestSectionBase(unittest.TestCase):
         svgFile = svg.SVG()
         svgFile.setSvg(svgRoot)
 
-        zoom2 = findZoom2BackGround(svgRoot)
+        zoom2 = svgFile.getZoom2Background()
         zoom2Old = etree.tostring(zoom2)
 
         section = LinacSection(self.name, self.colour, self.coord, self.width)
@@ -103,16 +103,16 @@ class TestSectionElements(unittest.TestCase):
         blankSVGpath = './blank.svg'
         svgTree = etree.parse(blankSVGpath)
         self.svgRoot = svgTree.getroot()
-        svgFile = svg.SVG()
-        svgFile.setSvg(self.svgRoot)
+        self.svgFile = svg.SVG()
+        self.svgFile.setSvg(self.svgRoot)
         self.aSection = LinacSection("A","grey", 0)
         self.bSection = LinacSection("B", "pink", 630)
         self.aSection.updateSvg()
         self.bSection.updateSvg()
 
     def testBigCaption(self):
-        zoomNode = findZoom1Background(self.svgRoot)
-        bigCaption = foundElement("section1bigText", zoomNode)
+        zoomNode = self.svgFile.getZoom1Background()
+        bigCaption = self.svgFile.getElement("section1bigText", zoomNode)
         self.assertEqual(bigCaption.text, "A")
         self.assertEqual(bigCaption.attrib["x"], "0")
         self.assertEqual(bigCaption.attrib["y"], "3653.7168")
@@ -123,33 +123,33 @@ class TestSectionElements(unittest.TestCase):
                                                      "stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:"
                                                      "'DejaVu Sans, Normal'")
 
-        secondBigCaption = foundElement("section2bigText", zoomNode)
+        secondBigCaption = self.svgFile.getElement("section2bigText", zoomNode)
         self.assertEqual(secondBigCaption.attrib["x"], "630")
         self.assertEqual(secondBigCaption.attrib["y"], "3653.7168")
         self.assertEqual(secondBigCaption.text, "B")
 
     def testBigRect(self):
-        zoomNode = findZoom1Background(self.svgRoot)
-        bigRect = foundElement("section1bigRect", zoomNode)
+        zoomNode = self.svgFile.getZoom1Background()
+        bigRect = self.svgFile.getElement("section1bigRect", zoomNode)
         self.assertEqual(bigRect.attrib["x"], "0")
         self.assertEqual(bigRect.attrib["y"], "3495")
         self.assertEqual(bigRect.attrib["width"], "630")
         self.assertEqual(bigRect.attrib["height"], "209.99997")
         self.assertEqual(bigRect.attrib["style"], "fill:grey;fill-opacity:0.49803922;stroke:none")
-        secondBigCaption = foundElement("section2bigRect", zoomNode)
+        secondBigCaption = self.svgFile.getElement("section2bigRect", zoomNode)
         self.assertEqual(secondBigCaption.attrib["x"], "630")
         self.assertEqual(secondBigCaption.attrib["y"], "3495")
 
     def testSmallCaption(self):
-        zoomNode = findZoom2BackGround(self.svgRoot)
-        smallCaption = foundElement("section1smallText", zoomNode)
+        zoomNode = self.svgFile.getZoom2Background()
+        smallCaption = self.svgFile.getElement("section1smallText", zoomNode)
         self.assertEqual(smallCaption.attrib["x"], "100")
         self.assertEqual(smallCaption.attrib["y"], "3702.2803")
         self.assertEqual(smallCaption.text, "A")
 
     def testBottomRect(self):
-        zoomNode = findZoom2BackGround(self.svgRoot)
-        bottomRect = foundElement("section1bottomRect", zoomNode)
+        zoomNode = self.svgFile.getZoom2Background()
+        bottomRect = self.svgFile.getElement("section1bottomRect", zoomNode)
         self.assertEqual(bottomRect.attrib["x"], "0")
         self.assertEqual(bottomRect.attrib["y"], "3685")
         self.assertEqual(bottomRect.attrib["width"], "630")
@@ -157,8 +157,8 @@ class TestSectionElements(unittest.TestCase):
         self.assertEqual(bottomRect.attrib["style"], "fill:#ffaaaa;fill-opacity:0.49803922;stroke:none;display:inline")
 
     def testVerticalLine(self):
-        zoomNode = findZoom2BackGround(self.svgRoot)
-        verticalLine = foundElement("section2verticalLine", zoomNode)
+        zoomNode = self.svgFile.getZoom2Background()
+        verticalLine = self.svgFile.getElement("section2verticalLine", zoomNode)
         self.assertEqual(verticalLine.attrib["x"], "1260")
         self.assertEqual(verticalLine.attrib["y"], "3594.144")
         self.assertEqual(verticalLine.attrib["width"], "0.85600001")
@@ -167,38 +167,6 @@ class TestSectionElements(unittest.TestCase):
 
     def tearDown(self):
         LinacSection.id = 1
-
-def foundElement(elementName, zoomNode):
-    searchElement = None
-    for element in zoomNode:
-        if element.attrib["id"] == elementName:
-            searchElement = element
-    return searchElement
-
-def findZoom1Background(svgRoot):
-    backgroundNode = None
-    for group in svgRoot[3]:
-        if group.attrib["id"] == "background":
-            backgroundNode = group
-            break
-    zoomNode = None
-    for group in backgroundNode:
-        if group.attrib["id"] == "layer2":
-            zoomNode = group
-    return zoomNode
-
-
-def findZoom2BackGround(svgRoot):
-    backgroundNode = None
-    for group in svgRoot[3]:
-        if group.attrib["id"] == "background":
-            backgroundNode = group
-            break
-    zoomNode = None
-    for group in backgroundNode:
-        if group.attrib["id"] == "layer1":
-            zoomNode = group
-    return zoomNode
 
 if __name__ == '__main__':
     unittest.main()

@@ -36,7 +36,6 @@ class LinacSection:
         return len(self.devices)
 
     def updateSvg(self):
-        self.backgroundNode = self.getBackgroundNode()
         self.updateZoom1()
         self.updateZoom2()
         self.svgFile.setSvg(self.svgRoot)
@@ -89,28 +88,13 @@ class LinacSection:
         rectElement.attrib["height"] = "109.856"
         rectElement.attrib["style"] = "fill:#3c3c3c;fill-opacity:0.74901961"
 
-    def getBackgroundNode(self):
-        backgroundNode = None
-        for group in self.svgRoot[3]:
-            if group.attrib["id"] == "background":
-                backgroundNode = group
-                break
-        return backgroundNode
-
     def updateZoom1(self):
-        zoomNode = None
-        for group in self.backgroundNode:
-            if group.attrib["id"] == "layer2":
-                zoomNode = group
+        zoomNode = self.svgFile.getZoom1Background()
         self.createBigRect(zoomNode)
         self.createBigCaption(zoomNode)
 
-
     def updateZoom2(self):
-        zoomNode = None
-        for group in self.backgroundNode:
-            if group.attrib["id"] == "layer1":
-                zoomNode = group
+        zoomNode = self.svgFile.getZoom2Background()
         self.createBottomRect(zoomNode)
         self.createSmallCaption(zoomNode)
         self.createVerticalLine(zoomNode)

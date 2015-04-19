@@ -58,9 +58,9 @@ class TestIcon(unittest.TestCase):
         svgFile.setSvg(svgRoot)
 
         icon.updateSvg()
-        symbolsNode = foundSymbolsNode(svgRoot)
+        symbolsNode = svgFile.getSymbolsNode()
         self.assertNotEqual(symbolsNode, None)
-        iconNode = foundElement("symbol-solenoid", symbolsNode)
+        iconNode = svgFile.getElement("symbol-solenoid", symbolsNode)
         self.assertNotEqual(iconNode, None)
         self.assertEqual(iconNode.attrib["style"], "display:inline")
         self.assertEqual(iconNode.tag, "g")
@@ -75,21 +75,6 @@ class TestIcon(unittest.TestCase):
 
     def tearDown(self):
         pass
-
-def foundSymbolsNode(svgRoot):
-    symbols = None
-    for group in svgRoot[3]:
-        if group.attrib["id"] == "symbols":
-            symbols = group
-            break
-    return symbols
-
-def foundElement(elementName, parentNode):
-    searchElement = None
-    for element in parentNode:
-        if element.attrib["id"] == elementName:
-            searchElement = element
-    return searchElement
 
 if __name__ == '__main__':
     unittest.main()

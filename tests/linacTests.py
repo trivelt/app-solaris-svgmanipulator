@@ -14,9 +14,9 @@ class TestLinac(unittest.TestCase):
     def setUp(self):
         blankSVGpath = './blank.svg'
         svgTree = etree.parse(blankSVGpath)
-        self.svgRoot = svgTree.getroot()
-        svgFile = svg.SVG()
-        svgFile.setSvg(self.svgRoot)
+        svgRoot = svgTree.getroot()
+        self.svgFile = svg.SVG()
+        self.svgFile.setSvg(svgRoot)
         self.linac = Linac()
 
     def testSectionColour(self):
@@ -55,8 +55,8 @@ class TestLinac(unittest.TestCase):
         newSection = self.linac.getSection("test002")
         self.assertEqual(newSection.longName, "test002")
 
-        zoomNode = findZoom2BackGround(self.svgRoot)
-        bottomRect = foundElement("section1bottomRect", zoomNode)
+        zoomNode = self.svgFile.getZoom2Background()
+        bottomRect = self.svgFile.getElement("section1bottomRect", zoomNode)
         self.assertEqual(bottomRect.attrib["x"], "1885")
         self.assertEqual(bottomRect.attrib["y"], "3685")
         self.assertEqual(self.linac.numberOfSections(), 1)
@@ -73,8 +73,8 @@ class TestLinac(unittest.TestCase):
         self.assertEqual(lastSection.width, 6148.519)
 
         self.linac.updateSvg()
-        zoomNode = findZoom2BackGround(self.svgRoot)
-        bottomRect = foundElement("section2bottomRect", zoomNode)
+        zoomNode = self.svgFile.getZoom2Background()
+        bottomRect = self.svgFile.getElement("section2bottomRect", zoomNode)
         self.assertEqual(bottomRect.attrib["x"], "2515")
 
     def testAddDevice(self):
@@ -99,25 +99,6 @@ class TestLinac(unittest.TestCase):
 
     def tearDown(self):
         pass
-
-def findZoom2BackGround(svgRoot):
-    backgroundNode = None
-    for group in svgRoot[3]:
-        if group.attrib["id"] == "background":
-            backgroundNode = group
-            break
-    zoomNode = None
-    for group in backgroundNode:
-        if group.attrib["id"] == "layer1":
-            zoomNode = group
-    return zoomNode
-
-def foundElement(elementName, zoomNode):
-    searchElement = None
-    for element in zoomNode:
-        if element.attrib["id"] == elementName:
-            searchElement = element
-    return searchElement
 
 if __name__ == '__main__':
     unittest.main()

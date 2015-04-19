@@ -26,7 +26,7 @@ class Icon:
     def updateSvg(self):
         svgFile = svg.SVG()
         self.svgRoot = svgFile.getSvg()
-        symbolsNode = self.getSymbolsNode()
+        symbolsNode = svgFile.getSymbolsNode()
 
         gElement = etree.SubElement(symbolsNode, "g")
         gElement.attrib["style"] = "display:inline"
@@ -39,14 +39,6 @@ class Icon:
         imgElement.attrib["y"] = str(self.coordinates[1])
         imgElement.attrib["width"] = "30"
         imgElement.attrib["height"] = "30"
-
-    def getSymbolsNode(self):
-        symbols = None
-        for group in self.svgRoot[3]:
-            if group.attrib["id"] == "symbols":
-                symbols = group
-                break
-        return symbols
 
     def isCorrect(self):
         return os.path.isfile(self.path)

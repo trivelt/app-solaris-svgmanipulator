@@ -112,7 +112,7 @@ class TestSectionElements(unittest.TestCase):
 
     def testBigCaption(self):
         zoomNode = self.svgFile.getZoom1Background()
-        bigCaption = self.svgFile.getElement("section1bigText", zoomNode)
+        bigCaption = self.svgFile.getElementById("section1bigText", zoomNode)
         self.assertEqual(bigCaption.text, "A")
         self.assertEqual(bigCaption.attrib["x"], "0")
         self.assertEqual(bigCaption.attrib["y"], "3653.7168")
@@ -123,33 +123,33 @@ class TestSectionElements(unittest.TestCase):
                                                      "stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:"
                                                      "'DejaVu Sans, Normal'")
 
-        secondBigCaption = self.svgFile.getElement("section2bigText", zoomNode)
+        secondBigCaption = self.svgFile.getElementById("section2bigText", zoomNode)
         self.assertEqual(secondBigCaption.attrib["x"], "630")
         self.assertEqual(secondBigCaption.attrib["y"], "3653.7168")
         self.assertEqual(secondBigCaption.text, "B")
 
     def testBigRect(self):
         zoomNode = self.svgFile.getZoom1Background()
-        bigRect = self.svgFile.getElement("section1bigRect", zoomNode)
+        bigRect = self.svgFile.getElementById("section1bigRect", zoomNode)
         self.assertEqual(bigRect.attrib["x"], "0")
         self.assertEqual(bigRect.attrib["y"], "3495")
         self.assertEqual(bigRect.attrib["width"], "630")
         self.assertEqual(bigRect.attrib["height"], "209.99997")
         self.assertEqual(bigRect.attrib["style"], "fill:grey;fill-opacity:0.49803922;stroke:none")
-        secondBigCaption = self.svgFile.getElement("section2bigRect", zoomNode)
+        secondBigCaption = self.svgFile.getElementById("section2bigRect", zoomNode)
         self.assertEqual(secondBigCaption.attrib["x"], "630")
         self.assertEqual(secondBigCaption.attrib["y"], "3495")
 
     def testSmallCaption(self):
         zoomNode = self.svgFile.getZoom2Background()
-        smallCaption = self.svgFile.getElement("section1smallText", zoomNode)
+        smallCaption = self.svgFile.getElementById("section1smallText", zoomNode)
         self.assertEqual(smallCaption.attrib["x"], "100")
         self.assertEqual(smallCaption.attrib["y"], "3702.2803")
         self.assertEqual(smallCaption.text, "A")
 
     def testBottomRect(self):
         zoomNode = self.svgFile.getZoom2Background()
-        bottomRect = self.svgFile.getElement("section1bottomRect", zoomNode)
+        bottomRect = self.svgFile.getElementById("section1bottomRect", zoomNode)
         self.assertEqual(bottomRect.attrib["x"], "0")
         self.assertEqual(bottomRect.attrib["y"], "3685")
         self.assertEqual(bottomRect.attrib["width"], "630")
@@ -158,7 +158,7 @@ class TestSectionElements(unittest.TestCase):
 
     def testVerticalLine(self):
         zoomNode = self.svgFile.getZoom2Background()
-        verticalLine = self.svgFile.getElement("section2verticalLine", zoomNode)
+        verticalLine = self.svgFile.getElementById("section2verticalLine", zoomNode)
         self.assertEqual(verticalLine.attrib["x"], "1260")
         self.assertEqual(verticalLine.attrib["y"], "3594.144")
         self.assertEqual(verticalLine.attrib["width"], "0.85600001")

@@ -60,7 +60,7 @@ class TestIcon(unittest.TestCase):
         icon.updateSvg()
         symbolsNode = svgFile.getSymbolsNode()
         self.assertNotEqual(symbolsNode, None)
-        iconNode = svgFile.getElement("symbol-solenoid", symbolsNode)
+        iconNode = svgFile.getElementById("symbol-solenoid", symbolsNode)
         self.assertNotEqual(iconNode, None)
         self.assertEqual(iconNode.attrib["style"], "display:inline")
         self.assertEqual(iconNode.tag, "g")

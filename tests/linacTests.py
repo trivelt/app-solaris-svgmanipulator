@@ -56,7 +56,7 @@ class TestLinac(unittest.TestCase):
         self.assertEqual(newSection.longName, "test002")
 
         zoomNode = self.svgFile.getZoom2Background()
-        bottomRect = self.svgFile.getElement("section1bottomRect", zoomNode)
+        bottomRect = self.svgFile.getElementById("section1bottomRect", zoomNode)
         self.assertEqual(bottomRect.attrib["x"], "1885")
         self.assertEqual(bottomRect.attrib["y"], "3685")
         self.assertEqual(self.linac.numberOfSections(), 1)
@@ -74,7 +74,7 @@ class TestLinac(unittest.TestCase):
 
         self.linac.updateSvg()
         zoomNode = self.svgFile.getZoom2Background()
-        bottomRect = self.svgFile.getElement("section2bottomRect", zoomNode)
+        bottomRect = self.svgFile.getElementById("section2bottomRect", zoomNode)
         self.assertEqual(bottomRect.attrib["x"], "2515")
 
     def testAddDevice(self):

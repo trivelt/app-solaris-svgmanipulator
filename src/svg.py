@@ -20,29 +20,36 @@ class SVG:
         self.svg = svg
 
     def getBackgroundNode(self):
-        return self.getElement("background", self.svg[3])
+        return self.getElementById("background", self.svg[3])
 
     def getZoom1Background(self):
         backgroundNode = self.getBackgroundNode()
-        return self.getElement("layer2", backgroundNode)
+        return self.getElementById("layer2", backgroundNode)
 
     def getZoom2Background(self):
         backgroundNode = self.getBackgroundNode()
-        return self.getElement("layer1", backgroundNode)
+        return self.getElementById("layer1", backgroundNode)
 
     def getSymbolsNode(self):
         return self.getSubsystemNode("symbols")
 
     def getSubsystemNode(self, name):
-        searchedNode = None
-        for group in self.svg[3]:
-            if group.attrib["{http://www.inkscape.org/namespaces/inkscape}label"] == name:
-                searchedNode = group
-        return searchedNode
+        return self.getElementByLabel(name, self.svg[3])
 
-    def getElement(self, elementName, parentNode):
+    def getSubsystemZoomNode(self, name):
+        subsystemNode = self.getSubsystemNode(name)
+        return self.getElementByLabel("zoom2", subsystemNode)
+
+    def getElementById(self, elementName, parentNode):
         searchElement = None
         for element in parentNode:
             if element.attrib["id"] == elementName:
                 searchElement = element
         return searchElement
+
+    def getElementByLabel(self, elementName, parentNode):
+        searchedNode = None
+        for group in parentNode:
+            if group.attrib["{http://www.inkscape.org/namespaces/inkscape}label"] == elementName:
+                searchedNode = group
+        return searchedNode

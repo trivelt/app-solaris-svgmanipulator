@@ -53,15 +53,23 @@ class TestSvg(unittest.TestCase):
         self.assertEqual(rfNode.attrib["id"], "layer4")
         self.assertEqual(vacNode.attrib["id"], "vacuum")
 
+    def testSubsystemZoomNode(self):
+        magNode = self.svgFile.getSubsystemZoomNode("MAG")
+        self.assertEqual(magNode.attrib["class"], "zoom level2")
+
     def testFoundElement(self):
         linac = Linac()
         linac.addSection("TEST-abc")
         linac.updateSvg()
         zoomNode = self.svgFile.getZoom2Background()
-        sectionRectNode = self.svgFile.getElement("section1bottomRect", zoomNode)
+        sectionRectNode = self.svgFile.getElementById("section1bottomRect", zoomNode)
 
         self.assertEqual(sectionRectNode.attrib["id"], "section1bottomRect")
         self.assertEqual(sectionRectNode.attrib["width"], "630")
+
+    def testFoundElementByLabel(self):
+        magNode = self.svgFile.getElementByLabel("MAG", self.svgRoot[3])
+        self.assertEqual(magNode.attrib["id"], "magnet")
 
 if __name__ == '__main__':
     unittest.main()

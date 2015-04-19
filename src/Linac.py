@@ -7,7 +7,7 @@ class Linac:
         LinacSection.id = 1
 
     def addSection(self, name, colour=None, width=630):
-        print("[Linac::addSection] Adding new section " + str(name))
+        print("Adding new section " + str(name) + " to the linac")
         if colour == None:
             colour = self.getNextSectionColour()
         coordinate = self.computeNewSectionCoordinate()
@@ -21,11 +21,11 @@ class Linac:
         self.sections.append(newSection)
 
     def addDevice(self, device):
-        print("[Linac::addDevice] Adding new device " + device.name)
+        print("Adding new device " + device.name + " to the linac")
         sectionName = device.getSectionName()
         deviceSection = self.getSection(sectionName)
         if deviceSection == None:
-            print("[Linac::addDevice] Device can not be added - wrong section name")
+            print("Device can not be added - wrong section name")
             return
         deviceSection.addDevice(device)
         device.section = deviceSection

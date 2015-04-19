@@ -114,6 +114,8 @@ class TestDevice(unittest.TestCase):
         vacNode = svgFile.getSubsystemZoomNode("VAC")
         deviceNode = svgFile.getElementById("ik01vacik01cab05vacipcu1", vacNode)
         self.assertEqual(deviceNode.attrib["{http://www.w3.org/1999/xlink}href"], "#symbol-quadrupole")
+        descriptionNode = svgFile.getElementById("ik01vacik01cab05vacipcu1Desc", deviceNode)
+        self.assertEqual(descriptionNode.text, "device=I-K01/VAC/I-K01CAB05-VAC-IPCU1")
 
     def tearDown(self):
         pass

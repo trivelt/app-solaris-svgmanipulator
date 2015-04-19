@@ -56,6 +56,10 @@ class Device:
         deviceElement.attrib["x"] = str(self.svgCoordinate)
         deviceElement.attrib["y"] = "3585"
 
+        descElement = etree.SubElement(deviceElement, "desc")
+        descElement.attrib["id"] = self.generateSimpleName() + "Desc"
+        descElement.text = "device=" + self.name
+
     def generateSimpleName(self):
         simpleName = self.name.lower()
         simpleName = simpleName.replace("-", "")

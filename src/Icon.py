@@ -24,6 +24,9 @@ class Icon:
             pass
 
     def updateSvg(self):
+        if self.isCorrect() == False:
+            print("Warning: icon's path is invalid!")
+
         svgFile = svg.SVG()
         self.svgRoot = svgFile.getSvg()
         symbolsNode = svgFile.getSymbolsNode()

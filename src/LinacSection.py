@@ -1,39 +1,17 @@
+from LinacAbstractSection import LinacAbstractSection
 from lxml import etree
 import svg
 
 
-class LinacSection:
+class LinacSection(LinacAbstractSection):
     id = 1
 
     def __init__(self, name, colour, startCoordinate, width=630):
-        self.longName = name
+        LinacAbstractSection.__init__(self, name, colour, startCoordinate, width)
         self.shortName = "section" + str(self.id)
-        self.colour = colour
-        self.startCoordinate = startCoordinate
-        self.width = width
-        self.devices = list()
 
         self.id = LinacSection.id
         LinacSection.id += 1
-
-        self.svgFile = svg.SVG()
-        self.svgRoot = self.svgFile.getSvg()
-
-    def addDevice(self, device):
-        device.numberInSection = len(self.devices)
-        self.devices.append(device)
-
-    def getDevice(self, number):
-        if number >= len(self.devices) or number < 0:
-            return None
-        else:
-            return self.devices[number]
-
-    def getDistanceBetweenDevices(self):
-        return self.width/float(self.numberOfDevices()+1)
-
-    def numberOfDevices(self):
-        return len(self.devices)
 
     def updateSvg(self):
         self.updateZoom1()
@@ -55,7 +33,6 @@ class LinacSection:
         textElement.attrib["y"] = "3702.2803"
         textElement.attrib["style"] = "font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:'Sans, Normal'"
         textElement.text = self.longName
-
 
     def createBottomRect(self, parentNode):
         rectElement = etree.SubElement(parentNode, "rect")

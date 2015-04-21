@@ -57,42 +57,6 @@ class TestSectionBase(unittest.TestCase):
         section.updateSvg()
         self.assertNotEqual(etree.tostring(zoom2), zoom2Old)
 
-    def testGetDistanceBetweenDevices(self):
-        section = LinacSection(self.name, self.colour, self.coord, 600)
-        self.assertEqual(section.numberOfDevices(), 0)
-        self.assertEqual(section.getDistanceBetweenDevices(), 600)
-        dev1 = Device("dev1", None, None)
-        section.addDevice(dev1)
-        self.assertEqual(section.getDistanceBetweenDevices(), 300)
-        dev2 = Device("dev2", None, None)
-        section.addDevice(dev2)
-        self.assertEqual(section.getDistanceBetweenDevices(), 200)
-
-    def testAddDevice(self):
-        device = Device("abcde", None, None)
-        section = LinacSection(self.name, self.colour, self.coord, 600)
-        self.assertEqual(section.numberOfDevices(), 0)
-        section.addDevice(device)
-        self.assertEqual(section.numberOfDevices(), 1)
-        self.assertEqual(section.devices[0], device)
-        self.assertEqual(device.numberInSection, 0)
-        otherDevice = Device("other", None, None)
-        section.addDevice(otherDevice)
-        self.assertEqual(otherDevice.numberInSection, 1)
-
-    def testGetDevice(self):
-        dev1 = Device("foo", None, None)
-        dev2 = Device("bar", None, None)
-        section = LinacSection(self.name, self.colour, self.coord, 600)
-        self.assertEqual(section.numberOfDevices(), 0)
-        section.addDevice(dev1)
-        section.addDevice(dev2)
-        self.assertEqual(section.numberOfDevices(), 2)
-        self.assertEqual(section.getDevice(0), dev1)
-        self.assertNotEqual(section.getDevice(0), dev2)
-        self.assertEqual(section.getDevice(1), dev2)
-        self.assertEqual(section.getDevice(3), None)
-
 
     def tearDown(self):
         LinacSection.id = 1

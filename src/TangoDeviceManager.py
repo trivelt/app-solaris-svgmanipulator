@@ -1,6 +1,7 @@
 import PyTango
 import os
 from Device import Device
+from Icon import Icon
 
 class TangoDeviceManager:
     def __init__(self):
@@ -40,7 +41,32 @@ class TangoDeviceManager:
         self.assignIconsToDevices()
 
     def assignIconsToDevices(self):
-        pass
+        #proxyDevice = PyTango.DeviceProxy("I-S00/MAG/I-S00-MAG-COBX2")
+        deviceToRemove = []
+        for device in self.devices:
+            iconProperty = self.database.get_device_property(device.name, "icon")
+            if not iconProperty["icon"]:
+                print("Device " + device.name + " has not set icon path property")
+                deviceToRemove.append(device)
+            else:
+                iconPath = iconProperty["icon"][0]
+                icon = Icon(iconPath)
+                device.icon = icon
+        for device in deviceToRemove:
+            self.devices.remove(device)
 
     def assignCoordinatesToDevices(self):
-        pass
+        deviceToRemove = []
+        for device in self.devices:
+            proxyDevice = PyTango.DeviceProxy(device.name)
+            xCoordProperty = proxyDevice.get_property("x")
+            yCoordProperty = proxyDevice.get_property("y")
+            if not xCoordProperty["x"] or not yCoordProperty["y"]:
+                print("Device " + device.name + " has not set coordinate properties")
+                deviceToRemove.append(device)
+            else:
+                yCoord = yCoordProperty["y"][0]
+                xCoord = xCoordProperty["x"][0]
+                device.realCoordinates = [xCoord, yCoord]
+        for device in deviceToRemove:
+            self.devices.remove(device)

@@ -17,6 +17,9 @@ class LinacSection(LinacAbstractSection):
 
     def addSubsection(self, name, colour, width):
         startCoordinate = self.computeSubsectionStartCoordinate()
+        if (startCoordinate + width) > (self.startCoordinate + self.width):
+            print("Cannot create subsection - wrong parameters")
+            return
         newSubsection = LinacSubsection(name, colour, startCoordinate, width)
         self.subsections.append(newSubsection)
 
@@ -57,7 +60,6 @@ class LinacSection(LinacAbstractSection):
         for subsection in self.subsections:
             devices.extend(subsection.devices)
         return devices
-
 
     def createBigCaption(self, parentNode):
         textElement = etree.SubElement(parentNode, "text")

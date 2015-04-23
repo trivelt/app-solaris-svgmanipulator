@@ -63,13 +63,13 @@ class TestSectionBase(unittest.TestCase):
         section = LinacSection("I-K00", None, None)
         self.assertEqual(section.hasSubsections(), False)
 
-        sectionWithSubsections = LinacSection("I-S01", None, None)
+        sectionWithSubsections = LinacSection("I-S01", None, 100)
         sectionWithSubsections.addSubsection("I-S01A", None, 0)
         self.assertEqual(sectionWithSubsections.hasSubsections(), True)
 
     def testGetSubsection(self):
-        section = LinacSection("I-K00", None, None)
-        section.addSubsection("I-K00A", None, None)
+        section = LinacSection("I-K00", None, 100)
+        section.addSubsection("I-K00A", None, 100)
         self.assertEqual(section.getSubsection("I-K00B"), None)
         self.assertEqual(section.getSubsection("I-K00A"), section.subsections[0])
 

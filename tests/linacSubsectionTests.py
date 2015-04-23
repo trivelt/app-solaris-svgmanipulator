@@ -12,19 +12,49 @@ from lxml import etree
 
 class TestLinacSubsection(unittest.TestCase):
     def setUp(self):
-        self.colour = "red"
-        self.name = "abcd-12"
-        self.coord = 150.123
-        self.width = 199.33
-        self.blankSVGpath = './blank.svg'
-        LinacSection.id = 1
+        self.colour = "green"
+        self.name = "xyz"
+        self.coord = 129
+        self.width = 108.1
+        LinacSubsection.id = 1
 
-    def testSectionCreate(self):
-        section = LinacSection(self.name, self.colour, self.coord, self.width)
-        self.assertEqual(section.longName, self.name)
+        self.blankSVGpath = './blank.svg'
+        svgTree = etree.parse(self.blankSVGpath)
+        svgRoot = svgTree.getroot()
+        self.svgFile = svg.SVG()
+        self.svgFile.setSvg(svgRoot)
+
+    def testSubsectionCreate(self):
+        subsection = LinacSubsection(self.name, self.colour, self.coord, self.width)
+        self.assertEqual(subsection.longName, self.name)
+        self.assertEqual(subsection.startCoordinate, self.coord)
+        self.assertEqual(subsection.width, self.width)
+        self.assertEqual(subsection.id, 1)
+
+        secondSubsection = LinacSubsection("Name", None, None, None)
+        self.assertEqual(secondSubsection.id, 2)
+
+    def testDrawRectangle(self):
+        subsection = LinacSubsection(self.name, self.colour, self.coord, self.width)
+        subsection.updateSvg()
+        zoomNode = self.svgFile.getZoom2Background()
+        rectangle = self.svgFile.getElementById("linacSubsection1Rect", zoomNode)
+
+        self.assertEqual(rectangle.attrib["width"], str(self.width))
+        self.assertEqual(rectangle.attrib["style"], "fill:green;fill-opacity:0.49803922;stroke:none;display:inline")
+
+    def testDrawText(self):
+        subsection = LinacSubsection(self.name, self.colour, self.coord, self.width)
+        subsection.updateSvg()
+        zoomNode = self.svgFile.getZoom2Background()
+        textElement = self.svgFile.getElementById("linacSubsection1smallText", zoomNode)
+
+        self.assertEqual(textElement.attrib["x"], str(self.coord))
+        self.assertEqual(textElement.text, self.name)
+
 
     def tearDown(self):
-        LinacSection.id = 1
+        LinacSubsection.id = 1
 
 if __name__ == '__main__':
     unittest.main()

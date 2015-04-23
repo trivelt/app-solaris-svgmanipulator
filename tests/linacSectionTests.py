@@ -5,6 +5,7 @@ sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 import unittest
 
 from src.LinacSection import LinacSection
+from src.LinacSubsection import LinacSubsection
 from src.Device import Device
 import src.svg as svg
 from lxml import etree
@@ -16,6 +17,7 @@ class TestSectionBase(unittest.TestCase):
         self.coord = 150.123
         self.width = 199.33
         self.blankSVGpath = './blank.svg'
+        LinacSection.id = 1
 
     def testSectionCreate(self):
         section = LinacSection(self.name, self.colour, self.coord, self.width)
@@ -57,6 +59,51 @@ class TestSectionBase(unittest.TestCase):
         section.updateSvg()
         self.assertNotEqual(etree.tostring(zoom2), zoom2Old)
 
+    def testHasSubsections(self):
+        section = LinacSection("I-K00", None, None)
+        self.assertEqual(section.hasSubsections(), False)
+
+        sectionWithSubsections = LinacSection("I-S01", None, None)
+        sectionWithSubsections.addSubsection("I-S01A", None, 0)
+        self.assertEqual(sectionWithSubsections.hasSubsections(), True)
+
+    def testGetSubsection(self):
+        section = LinacSection("I-K00", None, None)
+        section.addSubsection("I-K00A", None, None)
+        self.assertEqual(section.getSubsection("I-K00B"), None)
+        self.assertEqual(section.getSubsection("I-K00A"), section.subsections[0])
+
+    def testGetAllDevices(self):
+        section = LinacSection("I-K00", None, 0)
+
+        firstDevice = Device("test1", None, None)
+        secondDevice = Device("test2", None, None)
+        thirdDevice = Device("test3", None, None)
+        fourthDevice = Device("test4", None, None)
+
+        section.addSubsection("I-K01A", None, 100)
+        section.addSubsection("I-K01B", None, 100)
+        firstSubsection = section.getSubsection("I-K01A")
+        secondSubsection = section.getSubsection("I-K01B")
+
+        firstSubsection.addDevice(firstDevice)
+        section.addDevice(secondDevice)
+        secondSubsection.addDevice(thirdDevice)
+        firstSubsection.addDevice(fourthDevice)
+
+        allDevices = section.getAllDevices()
+        self.assertTrue(firstDevice in allDevices)
+        self.assertTrue(secondDevice in allDevices)
+        self.assertTrue(thirdDevice in allDevices)
+        self.assertTrue(fourthDevice in allDevices)
+        self.assertEqual(len(allDevices), 4)
+
+    def testComputeSubsectionCoordinate(self):
+        section = LinacSection("test", None, 100)
+        self.assertEqual(section.computeSubsectionStartCoordinate(), 100)
+
+        section.addSubsection("subtest", None, 45)
+        self.assertEqual(section.computeSubsectionStartCoordinate(), 145)
 
     def tearDown(self):
         LinacSection.id = 1

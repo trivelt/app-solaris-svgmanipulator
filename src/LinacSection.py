@@ -1,4 +1,5 @@
 from LinacAbstractSection import LinacAbstractSection
+from LinacSubsection import LinacSubsection
 from lxml import etree
 import svg
 
@@ -9,14 +10,54 @@ class LinacSection(LinacAbstractSection):
     def __init__(self, name, colour, startCoordinate, width=630):
         LinacAbstractSection.__init__(self, name, colour, startCoordinate, width)
         self.shortName = "section" + str(self.id)
+        self.subsections = list()
 
         self.id = LinacSection.id
         LinacSection.id += 1
+
+    def addSubsection(self, name, colour, width):
+        startCoordinate = self.computeSubsectionStartCoordinate()
+        newSubsection = LinacSubsection(name, colour, startCoordinate, width)
+        self.subsections.append(newSubsection)
+
+    def computeSubsectionStartCoordinate(self):
+        if len(self.subsections) == 0:
+            return self.startCoordinate
+        else:
+            lastSubsection = self.subsections[-1]
+            startOfLastSubsection = lastSubsection.startCoordinate
+            widthOfLastSubsection = lastSubsection.width
+            startOfNextSubsection = startOfLastSubsection + widthOfLastSubsection
+            return startOfNextSubsection
+
+    def getSubsection(self, name):
+        for subsection in self.subsections:
+            if subsection.longName == name:
+                return subsection
+        return None
+
+    def getAllDevices(self):
+        if self.hasSubsections():
+            devicesFromSubsections = self.getDevicesFromSubsections()
+            return self.devices + devicesFromSubsections
+        else:
+            return self.devices
+
+    def hasSubsections(self):
+        return True if self.subsections else False
 
     def updateSvg(self):
         self.updateZoom1()
         self.updateZoom2()
         self.svgFile.setSvg(self.svgRoot)
+        self.updateSubsections()
+
+    def getDevicesFromSubsections(self):
+        devices = list()
+        for subsection in self.subsections:
+            devices.extend(subsection.devices)
+        return devices
+
 
     def createBigCaption(self, parentNode):
         textElement = etree.SubElement(parentNode, "text")
@@ -75,3 +116,7 @@ class LinacSection(LinacAbstractSection):
         self.createBottomRect(zoomNode)
         self.createSmallCaption(zoomNode)
         self.createVerticalLine(zoomNode)
+
+    def updateSubsections(self):
+        for section in self.subsections:
+            section.updateSvg()

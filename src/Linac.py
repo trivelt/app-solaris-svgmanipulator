@@ -51,6 +51,39 @@ class Linac:
             else:
                 return "grey"
 
+    def assignDevicesBeforeDrawing(self):
+        for section in self.sections:
+            if section.hasSubsections() and section.numberOfDevices() > 0:
+                self.assignDevicesToSubsections(section)
+
+    def assignDevicesToSubsections(self, section):
+        for device in section.devices:
+            nearestDevice = self.findNearestDevice(device)
+            if nearestDevice is None:
+                nearestSubsection = section.subsections[0]
+            else:
+                nearestSubsection = nearestDevice.section
+            nearestSubsection.addDevice(device)
+            device.section = nearestSubsection
+            section.devices.remove(device)
+
+    def findNearestDevice(self, unassignedDevice):
+        deviceSection = unassignedDevice.section
+        devicesFromSubsections = deviceSection.getDevicesFromSubsections()
+        if len(devicesFromSubsections) == 0:
+            return None
+
+        nearestDevice = devicesFromSubsections[0]
+        minimalDistance = abs(devicesFromSubsections[0].realCoordinates[0] - unassignedDevice.realCoordinates[0])
+
+        for device in devicesFromSubsections:
+            distanceFromDevice = abs(device.realCoordinates[0] - unassignedDevice.realCoordinates[0])
+            if  distanceFromDevice < minimalDistance:
+                minimalDistance = distanceFromDevice
+                nearestDevice = device
+        return nearestDevice
+
+
     def numberOfSections(self):
         return len(self.sections)
 

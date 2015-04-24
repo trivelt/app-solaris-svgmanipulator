@@ -106,6 +106,21 @@ class TestLinac(unittest.TestCase):
         self.linac.addSection("FOO")
         self.assertEqual(self.linac.computeNewSectionCoordinate(), 2515)
 
+    def testAssignDevicesBeforeDrawing(self):
+        section = self.linac.addSection("I-K01", None, 200)
+        subsection = section.addSubsection("I-K01A", None, 50)
+        firstDevice = Device("I-K01/ab/cd", None, [12, 20])
+        secondDevice = Device("I-K01A/ef/gh", None, [5,20])
+        thirdDevice = Device("I-K01A/ij/kl", None, [15,20])
+        self.linac.addDevice(firstDevice)
+        self.linac.addDevice(secondDevice)
+        self.linac.addDevice(thirdDevice)
+
+        self.assertEqual(firstDevice.section, section)
+        self.linac.assignDevicesBeforeDrawing()
+        self.assertEqual(firstDevice.section, subsection)
+
+
     def tearDown(self):
         pass
 

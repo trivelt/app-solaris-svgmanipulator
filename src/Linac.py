@@ -13,6 +13,7 @@ class Linac:
         coordinate = self.computeNewSectionCoordinate()
         newSection = LinacSection(name, colour, coordinate, width)
         self.sections.append(newSection)
+        return newSection
 
     def addLastLongSection(self):
         colour = self.getNextSectionColour()
@@ -58,6 +59,9 @@ class Linac:
         for section in self.sections:
             if section.longName == name:
                 searchedSection = section
+            for subsection in section.subsections:
+                if subsection.longName == name:
+                    searchedSection = subsection
         return searchedSection
 
     def updateSvg(self):

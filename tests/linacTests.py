@@ -50,10 +50,11 @@ class TestLinac(unittest.TestCase):
 
     def testAddSection(self):
         self.assertEqual(self.linac.numberOfSections(), 0)
-        self.linac.addSection("test002")
+        addedSection = self.linac.addSection("test002")
         self.linac.updateSvg()
         newSection = self.linac.getSection("test002")
         self.assertEqual(newSection.longName, "test002")
+        self.assertEqual(addedSection, newSection)
 
         zoomNode = self.svgFile.getZoom2Background()
         bottomRect = self.svgFile.getElementById("section1bottomRect", zoomNode)
@@ -90,6 +91,14 @@ class TestLinac(unittest.TestCase):
         self.linac.addDevice(anotherDevice)
         self.assertEqual(section.getDevice(1), anotherDevice)
         self.assertEqual(section.numberOfDevices(), 2)
+
+    def testAddDeviceToSubsection(self):
+        section = self.linac.addSection("I-S01", None, 200)
+        subsection = section.addSubsection("I-S01B", None, 50)
+        device = Device("I-S01B/ab/cd", None, [0, 20])
+        self.linac.addDevice(device)
+        self.assertEqual(device.section, subsection)
+
 
     def testComputeCoordinate(self):
         self.assertEqual(self.linac.numberOfSections(), 0)

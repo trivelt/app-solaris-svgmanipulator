@@ -69,9 +69,10 @@ class TestSectionBase(unittest.TestCase):
 
     def testGetSubsection(self):
         section = LinacSection("I-K00", None, 100)
-        section.addSubsection("I-K00A", None, 100)
+        subsection = section.addSubsection("I-K00A", None, 100)
         self.assertEqual(section.getSubsection("I-K00B"), None)
         self.assertEqual(section.getSubsection("I-K00A"), section.subsections[0])
+        self.assertEqual(subsection, section.getSubsection("I-K00A"))
 
     def testGetAllDevices(self):
         section = LinacSection("I-K00", None, 0)

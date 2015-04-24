@@ -10,6 +10,9 @@ class Section:
         self.svgFile = SVG()
         self.svgRoot = self.svgFile.getSvg()
 
+    def __repr__(self):
+        return self.longName
+
     def addDevice(self, device):
         device.numberInSection = len(self.devices)
         self.devices.append(device)

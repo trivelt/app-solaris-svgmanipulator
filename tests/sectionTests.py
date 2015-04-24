@@ -43,6 +43,10 @@ class TestSection(unittest.TestCase):
         self.assertEqual(section.getDevice(1), dev2)
         self.assertEqual(section.getDevice(3), None)
 
+    def testRepr(self):
+        section = Section("AB-CD01", None)
+        self.assertEqual(section.__repr__(), "AB-CD01")
+
     def tearDown(self):
         pass
 

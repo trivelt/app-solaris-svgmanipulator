@@ -28,12 +28,6 @@ class TestRingSection(unittest.TestCase):
         self.assertEqual(section.startAngle, 15)
         self.assertEqual(section.endAngle, 50)
 
-    def testIsInUpperHalf(self):
-        upperSection = RingSection("InUpper", None, -30, 180)
-        lowerSection = RingSection("InLower", None, 100, 120)
-        self.assertEqual(upperSection.isInUpperHalf(), True)
-        self.assertEqual(lowerSection.isInUpperHalf(), False)
-
     def testDrawZoom1Section(self):
         section = RingSection("name", "blue", 0, 90)
         section.drawSectionOnZoom1(ArcDrawingTools.describePathForTextAnticlockwise)

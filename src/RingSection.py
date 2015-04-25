@@ -1,22 +1,15 @@
-from math import pi, cos, sin
-from Section import Section
+from RingAbstractSection import RingAbstractSection
 from ArcDrawingTools import ArcDrawingTools
 from lxml import etree
 import svg
 
 
-class RingSection(Section):
+class RingSection(RingAbstractSection):
     id = 1
 
     def __init__(self, name, colour, startAngle, angle):
-        Section.__init__(self, name, colour)
-        self.angle = angle
-        self.startAngle = startAngle
-        self.endAngle = (startAngle+angle)
+        RingAbstractSection.__init__(self, name, colour, startAngle, angle)
         self.subsections = list()
-        self.centerX = 11989.075
-        self.centerY = 4827.0225
-        self.radius = 2705.4143
         self.shortName = "ringSection" + str(self.id)
 
         self.id = RingSection.id
@@ -29,16 +22,6 @@ class RingSection(Section):
             clockwiseFunction = ArcDrawingTools.describePathForTextClockwise
         self.drawSectionOnZoom1(clockwiseFunction)
         self.drawSectionOnZoom2(clockwiseFunction)
-
-    def isInUpperHalf(self):
-        numbersOfAngle = [x for x in range(self.startAngle, self.endAngle)]
-        numbersOfUpperHalf = [x for x in range(-90, 90)]
-        listsIntersection = set(numbersOfAngle).intersection(numbersOfUpperHalf)
-        percentInUpperHalf = len(listsIntersection) / float(len(numbersOfAngle))
-        if percentInUpperHalf > 0.5:
-            return True
-        else:
-            return False
 
     def drawSectionOnZoom1(self, clockwiseFunction):
         self.drawBigColorfulCircle()

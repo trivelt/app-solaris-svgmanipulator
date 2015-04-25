@@ -10,6 +10,7 @@ from linacSubsectionTests import TestLinacSubsection
 from ringSectionTests import TestRingSection
 from iconTests import TestIcon
 from svgTests import TestSvg
+from arcDrawingToolsTests import TestArcTools
 import unittest
 
 unittest.main()

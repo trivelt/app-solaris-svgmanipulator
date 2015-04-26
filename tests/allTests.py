@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from deviceTest import TestDevice
+from acceleratorTests import TestAccelerator
 from linacTests import TestLinac
 from ringTests import TestRing
 from sectionTests import TestSection

@@ -8,6 +8,15 @@ class Icon:
         self.coordinates = coordinates
         self.updateName()
 
+    def __repr__(self):
+        return "Icon(" + self.path + ")"
+
+    def __eq__(self, other):
+        return self.path == other.path
+
+    def __hash__(self):
+        return hash(self.path)
+
     def updateName(self):
         pathElements = self.path.split("/")
         if len(pathElements):

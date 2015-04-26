@@ -51,6 +51,17 @@ class Linac:
             else:
                 return "grey"
 
+    def getAllDevicesSorted(self):
+        sortedDevices = list()
+        self.sortDevices()
+        for section in self.sections:
+            sortedDevices.extend(section.getAllDevices())
+        return sortedDevices
+
+    def sortDevices(self):
+        for section in self.sections:
+            section.sortDevicesRecursively()
+
     def assignDevicesBeforeDrawing(self):
         for section in self.sections:
             if section.hasSubsections() and section.numberOfDevices() > 0:
@@ -82,7 +93,6 @@ class Linac:
                 minimalDistance = distanceFromDevice
                 nearestDevice = device
         return nearestDevice
-
 
     def numberOfSections(self):
         return len(self.sections)

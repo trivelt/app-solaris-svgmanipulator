@@ -45,6 +45,11 @@ class RingSection(RingAbstractSection):
     def hasSubsections(self):
         return True if self.subsections else False
 
+    def sortDevicesRecursively(self):
+        self.sortDevices()
+        for subsection in self.subsections:
+            subsection.sortDevices()
+
     def getDevicesFromSubsections(self):
         devices = list()
         for subsection in self.subsections:

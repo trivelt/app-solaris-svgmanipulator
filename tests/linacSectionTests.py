@@ -106,6 +106,29 @@ class TestSectionBase(unittest.TestCase):
         section.addSubsection("subtest", None, 45)
         self.assertEqual(section.computeSubsectionStartCoordinate(), 145)
 
+    def testSortDevicesRecursively(self):
+        section = LinacSection("A", None, 100)
+        subsection = section.addSubsection("A01", None, 50)
+        firstDevice = Device("first", None, [301,222])
+        secondDevice = Device("second", None, [154,222])
+        thirdDevice = Device("third", None, [101,222])
+        fourthDevice = Device("fourth", None, [55, 30])
+        subsection.addDevice(firstDevice)
+        subsection.addDevice(secondDevice)
+        section.addDevice(thirdDevice)
+        section.addDevice(fourthDevice)
+
+        devices = section.getAllDevices()
+        self.assertEqual(devices[0], thirdDevice)
+        self.assertEqual(devices[2], firstDevice)
+
+        section.sortDevicesRecursively()
+        devices = section.getAllDevices()
+        self.assertEqual(devices[0], fourthDevice)
+        self.assertEqual(devices[2], secondDevice)
+
+
+
     def tearDown(self):
         LinacSection.id = 1
 

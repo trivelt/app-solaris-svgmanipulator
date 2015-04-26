@@ -47,12 +47,17 @@ class TestSection(unittest.TestCase):
         firstDevice = Device("First", None, [184, 99])
         secondDevice = Device("Second", None, [964, 80])
         section = Section("test", None)
+
         section.addDevice(secondDevice)
         section.addDevice(firstDevice)
 
         self.assertEqual(section.getDevice(0), secondDevice)
+        self.assertEqual(section.getDevice(0).numberInSection, 0)
+        self.assertEqual(section.getDevice(1).numberInSection, 1)
         section.sortDevices()
         self.assertEqual(section.getDevice(0), firstDevice)
+        self.assertEqual(section.getDevice(0).numberInSection, 0)
+        self.assertEqual(section.getDevice(1).numberInSection, 1)
 
     def testRepr(self):
         section = Section("AB-CD01", None)

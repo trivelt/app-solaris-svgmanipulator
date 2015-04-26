@@ -120,6 +120,24 @@ class TestLinac(unittest.TestCase):
         self.linac.assignDevicesBeforeDrawing()
         self.assertEqual(firstDevice.section, subsection)
 
+    def testGetAllDevicesSorted(self):
+        section = self.linac.addSection("A", None, 100)
+        subsection = section.addSubsection("A-1", None, 20)
+
+        firstDevice = Device("first", None, [301,222])
+        secondDevice = Device("second", None, [154,222])
+        thirdDevice = Device("third", None, [101,222])
+        fourthDevice = Device("fourth", None, [55, 30])
+        subsection.addDevice(firstDevice)
+        subsection.addDevice(secondDevice)
+        section.addDevice(thirdDevice)
+        section.addDevice(fourthDevice)
+
+        devices = self.linac.getAllDevicesSorted()
+        self.assertEqual(devices, [fourthDevice, thirdDevice, secondDevice, firstDevice])
+        self.assertEqual(devices[0].numberInSection, 0)
+        self.assertEqual(devices[2].numberInSection, 0)
+        self.assertEqual(devices[3].numberInSection, 1)
 
     def tearDown(self):
         pass

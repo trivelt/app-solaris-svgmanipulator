@@ -25,6 +25,11 @@ class Section:
 
     def sortDevices(self):
         self.devices = sorted(self.devices, key=lambda devices: devices.realCoordinates[0])
+        self.assignNumbersInSection()
+
+    def assignNumbersInSection(self):
+        for i in range(0, len(self.devices)):
+            self.devices[i].numberInSection = i
         
     def numberOfDevices(self):
         return len(self.devices)

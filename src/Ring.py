@@ -28,6 +28,10 @@ class Ring:
                     searchedSection = subsection
         return searchedSection
 
+    def sortDevices(self):
+        for section in self.sections:
+            section.sortDevicesRecursively()
+
     def updateSvg(self):
         for section in self.sections:
             section.updateSvg()

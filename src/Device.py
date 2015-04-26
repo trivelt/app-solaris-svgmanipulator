@@ -1,3 +1,4 @@
+from ArcDrawingTools import ArcDrawingTools
 from lxml import etree
 import svg
 
@@ -8,8 +9,12 @@ class Device:
         self.icon = icon
         self.subsystemName = ""
         self.section = None
-        self.svgCoordinate = None
         self.numberInSection = None
+
+        self.svgCoordinateX = None
+        self.svgCoordinateY = None
+
+
         self.findAndSetSubsystemName()
 
     def findAndSetSubsystemName(self):
@@ -22,7 +27,7 @@ class Device:
             self.checkNecessaryConditions()
         except:
             return
-        self.assignSvgCoordinate()
+        self.assignSvgCoordinates()
         self.createSvgNode()
 
 
@@ -38,12 +43,29 @@ class Device:
             print(exceptionMessage + "Subsystem name is invalid.")
             raise Exception
 
-    def assignSvgCoordinate(self):
-        if self.numberInSection == 0:
-            self.svgCoordinate = self.section.startCoordinate + self.section.getDistanceBetweenDevices()
+    def assignSvgCoordinates(self):
+        if self.isLinacElement():
+            self.assignSvgCoordinatesForLinacDevice()
         else:
-            previousDeviceInSection = self.section.getDevice(self.numberInSection-1)
-            self.svgCoordinate = previousDeviceInSection.svgCoordinate + self.section.getDistanceBetweenDevices()
+            self.assignSvgCoordinatesForRingDevice()
+
+
+    def assignSvgCoordinatesForLinacDevice(self):
+        self.svgCoordinateY = 3585
+        if self.numberInSection == 0:
+            self.svgCoordinateX = self.section.startCoordinate + self.section.getDistanceBetweenDevices()
+        else:
+            self.svgCoordinateX = self.section.startCoordinate + (self.numberInSection+1) * self.section.getDistanceBetweenDevices()
+
+    def assignSvgCoordinatesForRingDevice(self):
+        centerX = 11977.075
+        centerY = 4814.0
+        radius = 2645.4143
+        if self.numberInSection == 0:
+            angle = self.section.startAngle + self.section.getAngleBetweenDevices()
+        else:
+            angle = self.section.startAngle + (self.numberInSection+1) * self.section.getAngleBetweenDevices()
+        self.svgCoordinateX, self.svgCoordinateY = ArcDrawingTools.polarToCartesian(centerX, centerY, radius, angle)
 
     def createSvgNode(self):
         svgFile = svg.SVG()
@@ -53,8 +75,8 @@ class Device:
         deviceElement = etree.SubElement(subsystemNode, "use")
         deviceElement.attrib["id"] = self.generateSimpleName()
         deviceElement.attrib["{http://www.w3.org/1999/xlink}href"] = "#" + self.icon.name
-        deviceElement.attrib["x"] = str(self.svgCoordinate)
-        deviceElement.attrib["y"] = "3585"
+        deviceElement.attrib["x"] = str(self.svgCoordinateX)
+        deviceElement.attrib["y"] = str(self.svgCoordinateY)
 
         descElement = etree.SubElement(deviceElement, "desc")
         descElement.attrib["id"] = self.generateSimpleName() + "Desc"

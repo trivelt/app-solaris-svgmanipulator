@@ -23,6 +23,15 @@ class TestRingAbstractSection(unittest.TestCase):
         self.assertEqual(upperSection.isInUpperHalf(), True)
         self.assertEqual(lowerSection.isInUpperHalf(), False)
 
+    def testGetAngleBetweenDevices(self):
+        ringASection = RingAbstractSection("RAS", None, 20, 90)
+        self.assertEqual(ringASection.getAngleBetweenDevices(), 90)
+
+        ringASection.addDevice(Device("a", None, None))
+        self.assertEqual(ringASection.getAngleBetweenDevices(), 45)
+        ringASection.addDevice(Device("b", None, None))
+        self.assertEqual(ringASection.getAngleBetweenDevices(), 30)
+
     def tearDown(self):
         pass
 

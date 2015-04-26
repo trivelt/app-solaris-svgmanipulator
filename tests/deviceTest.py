@@ -81,17 +81,17 @@ class TestDevice(unittest.TestCase):
 
     def testAssigningSvgCoordinate(self):
         device = Device("abc/testDevice", None, None)
-        self.assertEqual(device.svgCoordinate, None)
+        self.assertEqual(device.svgCoordinateX, None)
 
         linac = Linac()
         linac.addSection("abc")
         linac.addDevice(device)
-        device.assignSvgCoordinate()
+        device.assignSvgCoordinatesForLinacDevice()
         testSection = linac.getSection("abc")
         sectionStartCoordinate = testSection.startCoordinate
         distanceBetweenDevices = testSection.getDistanceBetweenDevices()
 
-        self.assertEqual(device.svgCoordinate, sectionStartCoordinate+distanceBetweenDevices)
+        self.assertEqual(device.svgCoordinateX, sectionStartCoordinate+distanceBetweenDevices)
 
     def testGenerateSimpleName(self):
         device = Device("I-K01/VAC/I-K01CAB05-VAC-IPCU1", None, None)

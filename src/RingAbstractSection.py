@@ -19,3 +19,6 @@ class RingAbstractSection(Section):
             return True
         else:
             return False
+
+    def getAngleBetweenDevices(self):
+        return self.angle/float(self.numberOfDevices()+1)

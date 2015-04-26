@@ -55,9 +55,9 @@ class RingSection(RingAbstractSection):
 
     def updateSvg(self):
         if self.isInUpperHalf():
-            clockwiseFunction = ArcDrawingTools.describePathForTextAnticlockwise
+            clockwiseFunction = ArcDrawingTools.describeArcAnticlockwise
         else:
-            clockwiseFunction = ArcDrawingTools.describePathForTextClockwise
+            clockwiseFunction = ArcDrawingTools.describeArcClockwise
         self.drawSectionOnZoom1(clockwiseFunction)
         self.drawSectionOnZoom2(clockwiseFunction)
 
@@ -67,7 +67,7 @@ class RingSection(RingAbstractSection):
 
     def drawBigColorfulCircle(self):
         zoomNode = self.svgFile.getZoom1Background()
-        sectionElement = self.drawColourfulSection(zoomNode, 100, 0, "colourfulCircle")
+        sectionElement = self.drawColourfulSection(zoomNode, 0, 250, "colourfulCircle")
 
         descElement = etree.SubElement(sectionElement, "desc")
         descElement.attrib["id"] = self.shortName + "desc"
@@ -84,15 +84,16 @@ class RingSection(RingAbstractSection):
         sectionElement = etree.SubElement(parentNode, "path")
         sectionElement.attrib["id"] = self.shortName + idName
         sectionElement.attrib["d"] = path
-        sectionElement.attrib["fill"] = self.colour
+        sectionElement.attrib["fill"] = "white"
         sectionElement.attrib["stroke"] =  self.colour
         sectionElement.attrib["stroke-width"] = str(strokeWidth)
         return sectionElement
 
+
     def drawBigText(self, clockwiseFunction):
         style = "font-size:200px;font-style:normal;"
         zoomElement = self.svgFile.getZoom1Background()
-        if clockwiseFunction == ArcDrawingTools.describePathForTextAnticlockwise:
+        if clockwiseFunction == ArcDrawingTools.describeArcAnticlockwise:
             radiusOffset = -100
         else:
             radiusOffset = 35
@@ -103,7 +104,7 @@ class RingSection(RingAbstractSection):
                 "start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:" \
                 "#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:'Sans, Normal'"
         zoomElement = self.svgFile.getZoom2Background()
-        if clockwiseFunction == ArcDrawingTools.describePathForTextAnticlockwise:
+        if clockwiseFunction == ArcDrawingTools.describeArcAnticlockwise:
             radiusOffset = -157
         else:
             radiusOffset = -143

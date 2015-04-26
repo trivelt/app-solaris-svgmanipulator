@@ -30,16 +30,16 @@ class TestRingSection(unittest.TestCase):
 
     def testDrawZoom1Section(self):
         section = RingSection("name", "blue", 0, 90)
-        section.drawSectionOnZoom1(ArcDrawingTools.describePathForTextAnticlockwise)
+        section.drawSectionOnZoom1(ArcDrawingTools.describeArcAnticlockwise)
         node = self.svgFile.getZoom1Background()
         sectionNode = self.svgFile.getElementById("ringSection1colourfulCircle", node)
-        self.assertEqual(sectionNode.attrib["d"], "M 14794.4893 4827.0225 A 2805.4143 2805.4143 0 0 0 11989.075 "
-                                                  "2021.6082L 11989.075 4827.0225 L 14794.4893 4827.0225 Z")
-        self.assertEqual(sectionNode.attrib["fill"], "blue")
+        self.assertEqual(sectionNode.attrib["d"], "M 14694.4893 4827.0225 A 2705.4143 2705.4143 0 0 0 11989.075 2121.6082")
+        self.assertEqual(sectionNode.attrib["fill"], "white")
+        self.assertEqual(sectionNode.attrib["stroke"], "blue")
 
     def testDrawBigCaption(self):
         section = RingSection("R2-01", "yellow", 100,45)
-        section.drawSectionOnZoom1(ArcDrawingTools.describePathForTextAnticlockwise)
+        section.drawSectionOnZoom1(ArcDrawingTools.describeArcAnticlockwise)
         zoomNode = self.svgFile.getZoom1Background()
         textNode = self.svgFile.getElementById("ringSection1bigCaption", zoomNode)
         self.assertEqual(textNode.attrib["style"], "font-size:200px;font-style:normal;")

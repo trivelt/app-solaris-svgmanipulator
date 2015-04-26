@@ -43,6 +43,17 @@ class TestSection(unittest.TestCase):
         self.assertEqual(section.getDevice(1), dev2)
         self.assertEqual(section.getDevice(3), None)
 
+    def testSortDevices(self):
+        firstDevice = Device("First", None, [184, 99])
+        secondDevice = Device("Second", None, [964, 80])
+        section = Section("test", None)
+        section.addDevice(secondDevice)
+        section.addDevice(firstDevice)
+
+        self.assertEqual(section.getDevice(0), secondDevice)
+        section.sortDevices()
+        self.assertEqual(section.getDevice(0), firstDevice)
+
     def testRepr(self):
         section = Section("AB-CD01", None)
         self.assertEqual(section.__repr__(), "AB-CD01")

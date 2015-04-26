@@ -23,6 +23,9 @@ class Section:
         else:
             return self.devices[number]
 
+    def sortDevices(self):
+        self.devices = sorted(self.devices, key=lambda devices: devices.realCoordinates[0])
+        
     def numberOfDevices(self):
         return len(self.devices)
 

@@ -71,7 +71,7 @@ class TestLinac(unittest.TestCase):
         lastSection = self.linac.getSection("")
         self.assertNotEqual(lastSection, None)
         self.assertEqual(firstSection.width, 630)
-        self.assertEqual(lastSection.width, 6148.519)
+        self.assertEqual(lastSection.width, self.linac.width-630)
 
         self.linac.updateSvg()
         zoomNode = self.svgFile.getZoom2Background()

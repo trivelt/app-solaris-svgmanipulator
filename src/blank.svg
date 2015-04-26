@@ -27,11 +27,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.16"
-     inkscape:cx="2913.1316"
-     inkscape:cy="5330.9019"
+     inkscape:zoom="0.22627418"
+     inkscape:cx="9818.1249"
+     inkscape:cy="6483.1859"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="true"
      units="px"
      width="1800"
@@ -250,10 +250,16 @@
         <rect
            style="fill:#999999;fill-opacity:1"
            id="rect3117"
-           width="6778.519"
+           width="7770"
            height="9.5"
            x="1885.4"
            y="3595.062" />
+        <circle
+           style="color:#000000;fill:none;stroke:#999999;stroke-width:10.75049591;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:24.15000153;marker:none;display:inline;overflow:visible;enable-background:accumulate"
+           id="tinyRing"
+           cx="11989.075"
+           cy="4827.0225"
+           r="2645.4143" />
       </g>
       <path
          style="fill:#999999;fill-opacity:1"
@@ -373,7 +379,6 @@
        inkscape:groupmode="layer"
        id="symbols"
        inkscape:label="symbols"
-       style="display:inline">
-    </g>
+       style="display:inline" />
   </g>
 </svg>

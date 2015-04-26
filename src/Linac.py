@@ -3,7 +3,7 @@ from LinacSection import LinacSection
 class Linac:
     def __init__(self):
         self.sections = list()
-        self.width = 6778.519
+        self.width = 7770.0
         LinacSection.id = 1
 
     def addSection(self, name, colour=None, width=630):

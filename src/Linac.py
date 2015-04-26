@@ -10,7 +10,7 @@ class Linac(Accelerator):
 
     def addSection(self, name, colour=None, width=630):
         print("Adding new section " + str(name) + " to the linac")
-        if colour == None:
+        if colour is None:
             colour = self.getNextSectionColour()
         coordinate = self.computeNewSectionCoordinate()
         newSection = LinacSection(name, colour, coordinate, width)

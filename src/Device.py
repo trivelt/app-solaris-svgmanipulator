@@ -33,10 +33,10 @@ class Device:
 
     def checkNecessaryConditions(self):
         exceptionMessage = "Device " + self.name + " cannot be drawn. "
-        if self.section == None:
+        if self.section is None:
             print(exceptionMessage + "Probably it was not added to the appropriate section.")
             raise Exception
-        if self.icon == None:
+        if self.icon is None:
             print(exceptionMessage + "No icon assigned to the device. ")
             raise Exception
         if self.subsystemName == "":

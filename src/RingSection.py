@@ -2,8 +2,6 @@ from RingAbstractSection import RingAbstractSection
 from RingSubsection import RingSubsection
 from ArcDrawingTools import ArcDrawingTools
 from lxml import etree
-import svg
-
 
 class RingSection(RingAbstractSection):
     id = 1
@@ -60,6 +58,11 @@ class RingSection(RingAbstractSection):
             clockwiseFunction = ArcDrawingTools.describeArcClockwise
         self.drawSectionOnZoom1(clockwiseFunction)
         self.drawSectionOnZoom2(clockwiseFunction)
+        self.updateSubsections()
+
+    def updateSubsections(self):
+        for subsection in self.subsections:
+            subsection.updateSvg()
 
     def drawSectionOnZoom1(self, clockwiseFunction):
         self.drawBigColorfulCircle()
@@ -85,6 +88,7 @@ class RingSection(RingAbstractSection):
         sectionElement.attrib["id"] = self.shortName + idName
         sectionElement.attrib["d"] = path
         sectionElement.attrib["fill"] = "white"
+        sectionElement.attrib["fill-opacity"] = "0.0"
         sectionElement.attrib["stroke"] =  self.colour
         sectionElement.attrib["stroke-width"] = str(strokeWidth)
         return sectionElement

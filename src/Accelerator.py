@@ -7,7 +7,7 @@ class Accelerator:
         sectionName = device.getSectionName()
         deviceSection = self.getSection(sectionName)
         if deviceSection == None:
-            print("Device can not be added - wrong section name")
+            print("Device " + device.name + " can not be added - wrong section name")
             return
         deviceSection.addDevice(device)
         device.section = deviceSection

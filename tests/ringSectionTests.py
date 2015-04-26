@@ -44,6 +44,27 @@ class TestRingSection(unittest.TestCase):
         textNode = self.svgFile.getElementById("ringSection1bigCaption", zoomNode)
         self.assertEqual(textNode.attrib["style"], "font-size:200px;font-style:normal;")
 
+    def testHasSubsections(self):
+        section = RingSection("R-01", None, 0, 45)
+        self.assertEqual(section.hasSubsections(), False)
+
+        sectionWithSubsections = RingSection("R-02", None, 45, 90)
+        sectionWithSubsections.addSubsection("R-02A", None, 30)
+        self.assertEqual(sectionWithSubsections.hasSubsections(), True)
+
+    def testGetSubsection(self):
+        section = RingSection("R-00", None, 100, 60)
+        subsection = section.addSubsection("R-00A", None, 100)
+        self.assertEqual(section.getSubsection("R-00B"), None)
+        self.assertEqual(section.getSubsection("R-00A"), section.subsections[0])
+        self.assertEqual(subsection, section.getSubsection("R-00A"))
+
+    def testComputeSubsectionStartAngle(self):
+        section = RingSection("R1-01", None, 30, 40)
+        self.assertEqual(section.computeSubsectionStartAngle(), 30)
+        section.addSubsection("R1-01A", None, 15)
+        self.assertEqual(section.computeSubsectionStartAngle(), 45)
+
     def tearDown(self):
         RingSection.id = 1
 

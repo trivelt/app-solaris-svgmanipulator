@@ -1,4 +1,5 @@
 from RingAbstractSection import RingAbstractSection
+from RingSubsection import RingSubsection
 from ArcDrawingTools import ArcDrawingTools
 from lxml import etree
 import svg
@@ -14,6 +15,43 @@ class RingSection(RingAbstractSection):
 
         self.id = RingSection.id
         RingSection.id += 1
+
+    def addSubsection(self, name, colour, angle):
+        startAngle = self.computeSubsectionStartAngle()
+        newSubsection = RingSubsection(name, colour, startAngle, angle)
+        self.subsections.append(newSubsection)
+        return newSubsection
+
+    def computeSubsectionStartAngle(self):
+        if len(self.subsections) == 0:
+            return self.startAngle
+        else:
+            lastSubsection = self.subsections[-1]
+            endOfLastSubsection = lastSubsection.endAngle
+            startOfNextSubsection = endOfLastSubsection
+            return startOfNextSubsection
+
+    def getSubsection(self, name):
+        for subsection in self.subsections:
+            if subsection.longName == name:
+                return subsection
+        return None
+
+    def getAllDevices(self):
+        if self.hasSubsections():
+            devicesFromSubsections = self.getDevicesFromSubsections()
+            return self.devices + devicesFromSubsections
+        else:
+            return self.devices
+
+    def hasSubsections(self):
+        return True if self.subsections else False
+
+    def getDevicesFromSubsections(self):
+        devices = list()
+        for subsection in self.subsections:
+            devices.extend(subsection.devices)
+        return devices
 
     def updateSvg(self):
         if self.isInUpperHalf():

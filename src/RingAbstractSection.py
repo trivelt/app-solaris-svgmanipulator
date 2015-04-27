@@ -11,7 +11,7 @@ class RingAbstractSection(Section):
         self.radius = 2705.4143
 
     def isInUpperHalf(self):
-        numbersOfAngle = [x for x in range(self.startAngle, self.endAngle)]
+        numbersOfAngle = [x for x in range(int(self.startAngle), int(self.endAngle))]
         numbersOfUpperHalf = [x for x in range(-90, 90)]
         listsIntersection = set(numbersOfAngle).intersection(numbersOfUpperHalf)
         percentInUpperHalf = len(listsIntersection) / float(len(numbersOfAngle))

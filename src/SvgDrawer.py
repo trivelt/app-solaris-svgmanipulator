@@ -33,11 +33,17 @@ class SvgDrawer:
         section.addSubsection(subsectionName, colour, widthOrAngle)
 
     def drawAll(self):
+        devices = self.tDeviceManager.getDevices()
+
+        self.drawAccelerator()
+        self.drawIcons(devices)
+        self.drawDevices(devices)
+
+    def drawAccelerator(self):
         self.linac.updateSvg()
         self.ring.updateSvg()
 
-        devices = self.tDeviceManager.getDevices()
-
+    def drawIcons(self, devices):
         icons = set()
         for device in devices:
             icons.add(device.icon)
@@ -45,6 +51,12 @@ class SvgDrawer:
         for icon in icons:
             icon.updateSvg()
 
+    def drawDevices(self, devices):
+        self.addDeviceToAccelerator(devices)
+        devices = self.sortDevices()
+        self.drawDevicesOnSvg(devices)
+
+    def addDeviceToAccelerator(self, devices):
         for device in devices:
             if device.isLinacElement():
                 self.linac.addDevice(device)
@@ -54,10 +66,12 @@ class SvgDrawer:
         self.ring.assignDevicesBeforeDrawing()
         self.linac.assignDevicesBeforeDrawing()
 
+    def sortDevices(self):
         sortedDevices = list()
         sortedDevices.extend(self.linac.getAllDevicesSorted())
         sortedDevices.extend(self.ring.getAllDevicesSorted())
+        return sortedDevices
 
-        for device in sortedDevices:
-            print "Device " + device.name + " in section " + device.section.longName
+    def drawDevicesOnSvg(self, devices):
+        for device in devices:
             device.updateSvg()

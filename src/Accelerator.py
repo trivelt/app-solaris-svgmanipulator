@@ -35,8 +35,15 @@ class Accelerator:
 
     def assignDevicesBeforeDrawing(self):
         for section in self.sections:
-            if section.hasSubsections() and section.numberOfDevices() > 0:
+            if section.hasSubsections() and section.numberOfDevices() > 0 and not self.areAllSubsectionsEmpty(section):
                 self.assignDevicesToSubsections(section)
+
+    def areAllSubsectionsEmpty(self, section):
+        for subsection in section.subsections:
+            if subsection.numberOfDevices() > 0:
+                return False
+        return True
+
 
     def assignDevicesToSubsections(self, section):
         for device in section.devices:

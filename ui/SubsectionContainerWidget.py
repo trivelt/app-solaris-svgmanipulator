@@ -28,3 +28,7 @@ class SubsectionContainerWidget(QWidget):
         self.subsectionsDialog.exec_()
         numberOfSubsections = self.subsectionsDialog.getNumberOfSubsections()
         self.subsectionsLabel.setText("Subsections: " + str(numberOfSubsections))
+
+        if numberOfSubsections > 0:
+            ss = self.subsectionsDialog.getSubsections()
+            print ss[0].getName()

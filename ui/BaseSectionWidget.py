@@ -41,3 +41,6 @@ class BaseSectionWidget(QWidget):
         else:
             self.displayedNameEdit.setVisible((False))
             self.displayedNameCheckBox.setText("Change displayed name")
+
+    def getName(self):
+        return self.sectionNameEdit.text()

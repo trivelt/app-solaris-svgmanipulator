@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QDialog, QPushButton, QVBoxLayout, QScrollArea, QWidget, QMessageBox
+from PyQt4.QtGui import QPushButton, QVBoxLayout, QScrollArea, QWidget, QMessageBox
 from PyQt4.Qt import QRect
 from PyQt4 import QtCore
 from SubsectionContainerWidget import SubsectionContainerWidget
@@ -6,10 +6,12 @@ from SubsectionContainerWidget import SubsectionContainerWidget
 
 class SectionWidget(QWidget):
     def __init__(self, parent=None):
-        QDialog.__init__(self, parent)
+        QWidget.__init__(self, parent)
         self.sectionWidgets = list()
         self.setMinimumWidth(460)
         self.setMinimumHeight(600)
+
+        #self.setStyleSheet("border:0px solid red;")
 
         self.setupLayout()
         self.setupScrollArea()
@@ -63,8 +65,8 @@ class SectionWidget(QWidget):
     def getNumberOfSubsections(self):
         return len(self.sectionWidgets)
 
-    def getSubsectionsData(self):
-        subsectionsData = list()
-        for subsection in self.sectionWidgets:
-            subsectionsData.append(subsection.getSectionData())
-        return subsectionsData
+    def getSectionsData(self):
+        sectionsData = list()
+        for section in self.sectionWidgets:
+            sectionsData.append(section.getSectionData())
+        return sectionsData

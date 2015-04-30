@@ -4,7 +4,7 @@ from PyQt4 import QtCore
 from SubsectionContainerWidget import SubsectionContainerWidget
 
 
-class SectionWidget(QDialog):
+class SectionWidget(QWidget):
     def __init__(self, parent=None):
         QDialog.__init__(self, parent)
         self.sectionWidgets = list()
@@ -29,8 +29,7 @@ class SectionWidget(QDialog):
 
     def setupScrollArea(self):
         self.scrollArea = QScrollArea(self)
-        #self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.scrollArea.setMaximumWidth(460)
         self.scrollArea.setMinimumHeight(600)

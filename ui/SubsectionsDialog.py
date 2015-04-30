@@ -56,7 +56,7 @@ class SubsectionsDialog(QDialog):
         if userReply == QMessageBox.Yes:
             sender = self.sender()
             self.layout.removeWidget(sender)
-            self.sectionWidgets.remove(sender)
+            self.subsectionWidgets.remove(sender)
             sender.setVisible(False)
 
             self.widgetHeight -= 80

@@ -1,7 +1,7 @@
 from PyQt4.QtGui import QLabel, QColorDialog
 
 class ColorChooser(QLabel):
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         QLabel.__init__(self, parent)
         self.colorDialog = QColorDialog()
         self.setToolTip("Choose section color")

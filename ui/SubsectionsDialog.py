@@ -46,6 +46,17 @@ class SubsectionsDialog(QDialog):
         self.widgetHeight += 80
         self.containerWidget.resize(450,self.widgetHeight)
 
+        self.connect(newSection, QtCore.SIGNAL("remove()"), self.removeSection)
+
+
+    def removeSection(self):
+        sender = self.sender()
+        self.subsectionWidgets.remove(sender)
+        sender.setVisible(False)
+
+        self.widgetHeight -= 80
+        self.containerWidget.resize(450,self.widgetHeight)
+
     def getNumberOfSubsections(self):
         return len(self.subsectionWidgets)
 

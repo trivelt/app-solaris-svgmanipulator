@@ -32,7 +32,11 @@ class BaseSectionWidget(QWidget):
         self.displayedNameEdit.setToolTip("Displayed name of new section")
         self.displayedNameEdit.setVisible(False)
 
+        self.removeButton = QPushButton(self)
+        self.removeButton.setGeometry(QRect(385,5,35,30))
+
         self.connect(self.displayedNameCheckBox, QtCore.SIGNAL("clicked()"), self.changeDisplayedName)
+        self.connect(self.removeButton, QtCore.SIGNAL("clicked()"), QtCore.SIGNAL("remove()"))
 
     def changeDisplayedName(self):
         if self.displayedNameCheckBox.isChecked():

@@ -11,8 +11,8 @@ class SubsectionContainerWidget(QWidget):
 
         self.resize(450,80)
 
-        section = BaseSectionWidget(self)
-        section.setGeometry(QRect(5,5, 450, 80))
+        self.section = BaseSectionWidget(self)
+        self.section.setGeometry(QRect(5,5, 450, 80))
 
         self.subsectionsLabel = QLabel(self)
         self.subsectionsLabel.setText("Subsections: 0")
@@ -23,12 +23,13 @@ class SubsectionContainerWidget(QWidget):
         self.subsectionsEditButton.setGeometry(QRect(125,40,20,30))
 
         self.connect(self.subsectionsEditButton, QtCore.SIGNAL("clicked()"), self.editSubsections)
+        self.connect(self.section, QtCore.SIGNAL("remove()"), QtCore.SIGNAL("remove()"))
 
     def editSubsections(self):
         self.subsectionsDialog.exec_()
         numberOfSubsections = self.subsectionsDialog.getNumberOfSubsections()
         self.subsectionsLabel.setText("Subsections: " + str(numberOfSubsections))
 
-        if numberOfSubsections > 0:
-            ss = self.subsectionsDialog.getSubsections()
-            print ss[0].getName()
+    def getSectionData(self):
+        subsectionsData = self.subsectionsDialog.getSubsectionsData()
+        return self.section.getSectionData().extend(subsectionsData)

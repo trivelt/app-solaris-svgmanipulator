@@ -13,10 +13,10 @@ class BaseSectionWidget(QWidget):
         self.sectionNameEdit.setPlaceholderText("Section name")
         self.sectionNameEdit.setToolTip("Name of new section")
 
-        self.widthEdit = QLineEdit(self)
-        self.widthEdit.setGeometry(QRect(130,5,50,30))
-        self.widthEdit.setPlaceholderText("size")
-        self.widthEdit.setToolTip("Size of section in percent")
+        self.sizeEdit = QLineEdit(self)
+        self.sizeEdit.setGeometry(QRect(130,5,50,30))
+        self.sizeEdit.setPlaceholderText("size")
+        self.sizeEdit.setToolTip("Size of section in percent")
 
         self.colorLabel = ColorChooser(self)
         self.colorLabel.setGeometry(QRect(185,8,25,25))
@@ -48,3 +48,11 @@ class BaseSectionWidget(QWidget):
 
     def getName(self):
         return self.sectionNameEdit.text()
+
+    def getSectionData(self):
+        name = self.sectionNameEdit.text()
+        size = self.sizeEdit.text()
+        color = self.colorLabel.getSelectedColor()
+        displayedNameFlag = self.displayedNameCheckBox.isChecked()
+        displayedName = self.displayedNameEdit.text()
+        return (name, size, color, displayedNameFlag, displayedName)

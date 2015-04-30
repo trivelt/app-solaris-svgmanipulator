@@ -1,14 +1,14 @@
-from PyQt4.QtGui import QDialog, QPushButton, QVBoxLayout, QScrollArea, QWidget
+from PyQt4.QtGui import QDialog, QPushButton, QVBoxLayout, QScrollArea, QWidget, QMessageBox
 from PyQt4.Qt import QRect
 from PyQt4 import QtCore
 from BaseSectionWidget import BaseSectionWidget
 
 
 class SubsectionsDialog(QDialog):
-    def __init__(self, strt, parent=None):
+    def __init__(self, parent=None):
         QDialog.__init__(self, parent)
         self.subsectionWidgets = list()
-        self.setMinimumWidth(450)
+        self.setMinimumWidth(460)
         self.setMinimumHeight(600)
 
         self.setupLayout()
@@ -17,12 +17,14 @@ class SubsectionsDialog(QDialog):
         self.addSectionButton.setText("Add new section")
         self.layout.addWidget(self.addSectionButton)
 
+        self.setWindowTitle("Subsections editing")
+
         self.connect(self.addSectionButton, QtCore.SIGNAL("clicked()"), self.addNewSection)
 
     def setupLayout(self):
         self.containerWidget = QWidget(self)
         self.widgetHeight = 120
-        self.containerWidget.setGeometry(QRect(0,0,450,self.widgetHeight))
+        self.containerWidget.setGeometry(QRect(0,0,460,self.widgetHeight))
 
         self.layout = QVBoxLayout()
         self.containerWidget.setLayout(self.layout)
@@ -31,11 +33,10 @@ class SubsectionsDialog(QDialog):
         self.scrollArea = QScrollArea(self)
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.scrollArea.setMaximumWidth(440)
+        self.scrollArea.setMaximumWidth(460)
         self.scrollArea.setMinimumHeight(600)
         self.scrollArea.setWidgetResizable(False)
         self.scrollArea.setWidget(self.containerWidget)
-
 
     def addNewSection(self):
         newSection = BaseSectionWidget(self.containerWidget)
@@ -44,21 +45,31 @@ class SubsectionsDialog(QDialog):
         self.subsectionWidgets.append(newSection)
 
         self.widgetHeight += 80
-        self.containerWidget.resize(450,self.widgetHeight)
+        self.containerWidget.resize(460,self.widgetHeight)
 
         self.connect(newSection, QtCore.SIGNAL("remove()"), self.removeSection)
 
-
     def removeSection(self):
-        sender = self.sender()
-        self.subsectionWidgets.remove(sender)
-        sender.setVisible(False)
+        messageBox = QMessageBox(self)
+        userReply = messageBox.question(self, "Are you sure?", "Do you want to remove this section?",
+                                        QMessageBox.Yes|QMessageBox.No)
+        if userReply == QMessageBox.Yes:
+            sender = self.sender()
+            self.layout.removeWidget(sender)
+            self.sectionWidgets.remove(sender)
+            sender.setVisible(False)
 
-        self.widgetHeight -= 80
-        self.containerWidget.resize(450,self.widgetHeight)
+            self.widgetHeight -= 80
+            self.containerWidget.resize(460,self.widgetHeight)
 
     def getNumberOfSubsections(self):
         return len(self.subsectionWidgets)
 
     def getSubsections(self):
         return self.subsectionWidgets
+
+    def getSubsectionsData(self):
+        subsectionsData = list()
+        for subsection in self.subsectionWidgets:
+            subsectionsData.append(subsection.getSectionData())
+        return subsectionsData

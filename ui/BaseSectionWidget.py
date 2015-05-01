@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QWidget, QLineEdit, QPushButton, QCheckBox
+from PyQt4.QtGui import QWidget, QLineEdit, QPushButton, QCheckBox, QDoubleSpinBox
 from PyQt4.Qt import QRect
 from PyQt4 import QtCore
 from ColorChooser import ColorChooser
@@ -9,13 +9,13 @@ class BaseSectionWidget(QWidget):
         self.resize(400,80)
 
         self.sectionNameEdit = QLineEdit(self)
-        self.sectionNameEdit.setGeometry(QRect(5,5,120,30))
+        self.sectionNameEdit.setGeometry(QRect(0,5,110,30))
         self.sectionNameEdit.setPlaceholderText("Section name")
         self.sectionNameEdit.setToolTip("Name of new section")
 
-        self.sizeEdit = QLineEdit(self)
-        self.sizeEdit.setGeometry(QRect(130,5,50,30))
-        self.sizeEdit.setPlaceholderText("size")
+        self.sizeEdit = QDoubleSpinBox(self)
+        self.sizeEdit.setGeometry(QRect(115,5,65,30))
+        #self.sizeEdit.setPlaceholderText("size")
         self.sizeEdit.setToolTip("Size of section in percent")
 
         self.colorLabel = ColorChooser(self)

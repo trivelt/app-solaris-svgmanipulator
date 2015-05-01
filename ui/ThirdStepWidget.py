@@ -12,8 +12,6 @@ class ThirdStepWidget(QWidget):
 
         self.setupButtons()
 
-
-
     def setupButtons(self):
         previousStepButton = QPushButton(self)
         previousStepButton.setText("Previous step")
@@ -40,4 +38,5 @@ class ThirdStepWidget(QWidget):
 
         loadButton = QPushButton(self)
         loadButton.setText("Load devices and create SVG")
-        self.layout.addWidget(loadButton,3,0, -1, -1)
+        self.layout.addWidget(loadButton, 3,0, 1, -1, QtCore.Qt.AlignTop)
+        self.connect(loadButton, QtCore.SIGNAL("clicked()"), QtCore.SIGNAL("loadDevices()"))

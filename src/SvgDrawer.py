@@ -1,5 +1,4 @@
 import src.svg as svg
-from src.Linac import Linac
 from lxml import etree
 from Linac import Linac
 from Ring import Ring
@@ -34,10 +33,15 @@ class SvgDrawer:
 
     def drawAll(self):
         devices = self.tDeviceManager.getDevices()
+        self.initializeBlankSvg()
 
         self.drawAccelerator()
         self.drawIcons(devices)
         self.drawDevices(devices)
+
+    def initializeBlankSvg(self):
+        blankSVGpath = '../src/blank.svg'
+        self.loadSvg(blankSVGpath)
 
     def drawAccelerator(self):
         self.linac.updateSvg()

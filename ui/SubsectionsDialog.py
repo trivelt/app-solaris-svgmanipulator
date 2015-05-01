@@ -15,6 +15,7 @@ class SubsectionsDialog(QDialog):
         self.subsectionWidgets = list()
         self.setMinimumWidth(460)
         self.setMinimumHeight(600)
+        self.sumSize = 0
 
         self.setupLayout()
         self.setupScrollArea()
@@ -45,18 +46,37 @@ class SubsectionsDialog(QDialog):
 
     def addNewSection(self):
         newSection = BaseSectionWidget(self.containerWidget)
-        self.setDefaultValues(newSection)
         widgetPosition = len(self.subsectionWidgets)
         self.layout.insertWidget(widgetPosition, newSection)
         self.subsectionWidgets.append(newSection)
+        self.setDefaultValues(newSection)
 
         self.widgetHeight += 80
         self.containerWidget.resize(460,self.widgetHeight)
 
         self.connect(newSection, QtCore.SIGNAL("remove()"), self.removeSection)
+        self.connect(newSection, QtCore.SIGNAL("sizeValueChanged(QWidget*)"), self.updateSumOfSize)
 
     def setDefaultValues(self, section):
         section.colorLabel.setColor(SettingsCloud.getParameter("subsectionColor"))
+        self.setSubsectionSize(section)
+
+    def setSubsectionSize(self, section):
+        if self.isLinacSection:
+            defaultSize = SettingsCloud.getParameter("linacSubsectionSize")
+        else:
+            defaultSize = SettingsCloud.getParameter("ringSubsectionSize")
+        section.sizeEdit.setValue(defaultSize)
+        self.updateSumOfSize(section)
+
+    def updateSumOfSize(self, sectionWidget):
+        self.sumSize = 0
+        for subsection in self.subsectionWidgets:
+            self.sumSize += subsection.sizeEdit.value()
+        if self.sumSize > 100:
+            diff = self.sumSize - 100.0
+            actualSize = sectionWidget.sizeEdit.value()
+            sectionWidget.sizeEdit.setValue(actualSize - diff)
 
     def removeSection(self):
         messageBox = QMessageBox(self)

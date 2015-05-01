@@ -15,6 +15,7 @@ class BaseSectionWidget(QWidget):
 
         self.sizeEdit = QDoubleSpinBox(self)
         self.sizeEdit.setGeometry(QRect(115,5,65,30))
+        self.sizeEdit.setMaximum(100.0)
         self.sizeEdit.setToolTip("Size of section in percent")
 
         self.colorLabel = ColorChooser(self)
@@ -41,6 +42,10 @@ class BaseSectionWidget(QWidget):
 
         self.connect(self.displayedNameCheckBox, QtCore.SIGNAL("clicked()"), self.changeDisplayedName)
         self.connect(self.removeButton, QtCore.SIGNAL("clicked()"), QtCore.SIGNAL("remove()"))
+        self.connect(self.sizeEdit, QtCore.SIGNAL("valueChanged(double)"), self.changeSizeValue)
+
+    def changeSizeValue(self):
+        self.emit(QtCore.SIGNAL("sizeValueChanged(QWidget*)"), self)
 
     def changeDisplayedName(self):
         if self.displayedNameCheckBox.isChecked():

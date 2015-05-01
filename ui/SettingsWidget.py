@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QPushButton, QLabel, QGridLayout, QWidget, QLineEdit, QHBoxLayout, QVBoxLayout
+from PyQt4.QtGui import QPushButton, QLabel , QWidget, QLineEdit, QHBoxLayout, QVBoxLayout, QDoubleSpinBox
 from PyQt4.QtCore import QRect, Qt
 from ColorChooser import ColorChooser
 
@@ -6,15 +6,9 @@ class SettingsWidget(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
 
-        #self.setStyleSheet("background-color:orange;")
         self.setFixedWidth(500)
         self.setFixedHeight(400)
-
         self.setStyleSheet("font-size:20px;")
-
-        # self.settingsLabel = QLabel(self)
-        # self.settingsLabel.setText("Default settings")
-        # self.settingsLabel.setStyleSheet("font-size:25px;")
 
         self.vLayout = QVBoxLayout()
         self.setLayout(self.vLayout)
@@ -22,8 +16,9 @@ class SettingsWidget(QWidget):
         settingsLabel = QLabel(self)
         settingsLabel.setText("Default settings")
         settingsLabel.setStyleSheet("font-size:25px;")
+        settingsLabel.setFixedWidth(500)
+        settingsLabel.setAlignment(Qt.AlignCenter)
         self.vLayout.addWidget(settingsLabel)
-
 
         sectionColorLabel = QLabel(self)
         sectionColorLabel.setText("Section color:")
@@ -39,63 +34,48 @@ class SettingsWidget(QWidget):
 
         linacSectionSizeLabel = QLabel(self)
         linacSectionSizeLabel.setText("Linac section size: ")
-        self.linacSectionSizeEdit = QLineEdit(self)
-        self.putInHorizontalLayout(linacSectionSizeLabel, self.linacSectionSizeEdit)
+        self.linacSectionSizeSpinBox = QDoubleSpinBox(self)
+        self.linacSectionSizeSpinBox.setFixedWidth(100)
+        self.linacSectionSizeSpinBox.setMaximum(100.0)
+        self.putInHorizontalLayout(linacSectionSizeLabel, self.linacSectionSizeSpinBox)
 
-        linaccSubsectionSizeLabel = QLabel(self)
-        linaccSubsectionSizeLabel.setText("Linac subsection size: ")
-        self.linacSubsectionSizeEdit = QLineEdit(self)
-        self.putInHorizontalLayout(linaccSubsectionSizeLabel, self.linacSubsectionSizeEdit)
+        linacSubsectionSizeLabel = QLabel(self)
+        linacSubsectionSizeLabel.setText("Linac subsection size: ")
+        self.linacSubsectionSizeSpinBox = QDoubleSpinBox(self)
+        self.linacSubsectionSizeSpinBox.setFixedWidth(100)
+        self.linacSubsectionSizeSpinBox.setMaximum(100.0)
+        self.putInHorizontalLayout(linacSubsectionSizeLabel, self.linacSubsectionSizeSpinBox)
 
         ringSectionSizeLabel = QLabel(self)
         ringSectionSizeLabel.setText("Ring section size: ")
-        self.ringSectionSizeEdit = QLineEdit(self)
-        self.putInHorizontalLayout(ringSectionSizeLabel, self.ringSectionSizeEdit)
+        self.ringSectionSizeSpinBox = QDoubleSpinBox(self)
+        self.ringSectionSizeSpinBox.setFixedWidth(100)
+        self.ringSectionSizeSpinBox.setMaximum(100.0)
+        self.putInHorizontalLayout(ringSectionSizeLabel, self.ringSectionSizeSpinBox)
 
         ringSubectionSizeLabel = QLabel(self)
         ringSubectionSizeLabel.setText("Ring subsection size: ")
-        self.ringSubsectionSizeEdit = QLineEdit(self)
-        self.putInHorizontalLayout(ringSubectionSizeLabel, self.ringSubsectionSizeEdit)
+        self.ringSubsectionSizeSpinBox = QDoubleSpinBox(self)
+        self.ringSubsectionSizeSpinBox.setFixedWidth(100)
+        self.ringSubsectionSizeSpinBox.setMaximum(100.0)
+        self.putInHorizontalLayout(ringSubectionSizeLabel, self.ringSubsectionSizeSpinBox)
 
 
         centerCoordinatesLabel = QLabel(self)
         centerCoordinatesLabel.setText("Real coordinates of ring center")
         self.centerCoordinatesEditX = QLineEdit()
         self.centerCoordinatesEditX.setPlaceholderText("X")
+        self.centerCoordinatesEditX.setFixedWidth(80)
         self.centerCoordinatesEditY = QLineEdit()
         self.centerCoordinatesEditY.setPlaceholderText("Y")
+        self.centerCoordinatesEditY.setFixedWidth(80)
         self.putInHorizontalLayout(centerCoordinatesLabel, self.centerCoordinatesEditX, self.centerCoordinatesEditY)
-
-
-        # sectionColorLabel = QLabel(self)
-        # sectionColorLabel.setText("Section color: ")
-        # sectionColorLabel.setGeometry(QRect(5,20,125,100))
-        # sectionColorChooser = ColorChooser(self)
-        # sectionColorChooser.setGeometry(QRect(135,55,30,30))
-        #
-        # subsectionColorLabel = QLabel(self)
-        # subsectionColorLabel.setText("Subsection color: ")
-        # subsectionColorLabel.setGeometry(QRect(5,60,145,100))
-        # subsectionColorChooser = ColorChooser(self)
-        # subsectionColorChooser.setGeometry(QRect(155,95,30,30))
-        #
-        # linacSectionSizeLabel = QLabel(self)
-        # linacSectionSizeLabel.setText("Linac section size: ")
-        # linacSectionSizeLabel.setGeometry(QRect(5, 140, 160, 30))
-        # linacSectionSizeEdit = QLineEdit(self)
-        # linacSectionSizeEdit.setGeometry(QRect(170, 140, 50, 30))
-        #
-        # linacSectionSizeLabel = QLabel(self)
-        # linacSectionSizeLabel.setText("Linac section size: ")
-        # linacSectionSizeLabel.setGeometry(QRect(5, 140, 160, 30))
-        # linacSectionSizeEdit = QLineEdit(self)
-        # linacSectionSizeEdit.setGeometry(QRect(170, 140, 50, 30))
 
 
     def putInHorizontalLayout(self, label, edit, secondEdit=None):
         layout = QHBoxLayout()
-        layout.addWidget(label)
-        layout.addWidget(edit)
+        layout.addWidget(label, Qt.AlignLeft)
+        layout.addWidget(edit, Qt.AlignRight)
         if secondEdit is not None:
             layout.addWidget(secondEdit)
         self.vLayout.addLayout(layout)

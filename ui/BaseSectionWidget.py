@@ -1,5 +1,5 @@
-from PyQt4.QtGui import QWidget, QLineEdit, QPushButton, QCheckBox, QDoubleSpinBox
-from PyQt4.Qt import QRect
+from PyQt4.QtGui import QWidget, QLineEdit, QPushButton, QCheckBox, QDoubleSpinBox, QPixmap, QIcon
+from PyQt4.Qt import QRect, QSize
 from PyQt4 import QtCore
 from ColorChooser import ColorChooser
 
@@ -15,7 +15,6 @@ class BaseSectionWidget(QWidget):
 
         self.sizeEdit = QDoubleSpinBox(self)
         self.sizeEdit.setGeometry(QRect(115,5,65,30))
-        #self.sizeEdit.setPlaceholderText("size")
         self.sizeEdit.setToolTip("Size of section in percent")
 
         self.colorLabel = ColorChooser(self)
@@ -34,6 +33,11 @@ class BaseSectionWidget(QWidget):
 
         self.removeButton = QPushButton(self)
         self.removeButton.setGeometry(QRect(385,5,35,30))
+        self.removeButton.setToolTip("Remove section")
+        pixmap = QPixmap("./removeIcon.png")
+        buttonIcon = QIcon(pixmap)
+        self.removeButton.setIcon(buttonIcon)
+        self.removeButton.setIconSize(QSize(25,25))
 
         self.connect(self.displayedNameCheckBox, QtCore.SIGNAL("clicked()"), self.changeDisplayedName)
         self.connect(self.removeButton, QtCore.SIGNAL("clicked()"), QtCore.SIGNAL("remove()"))

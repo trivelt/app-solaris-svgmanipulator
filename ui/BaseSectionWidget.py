@@ -70,5 +70,5 @@ class BaseSectionWidget(QWidget):
         color = self.colorLabel.getSelectedColor()
         displayedNameFlag = self.displayedNameCheckBox.isChecked()
         displayedName = self.displayedNameEdit.text()
-        return (name, size, color, displayedNameFlag, displayedName)
+        return [name, size, color, displayedNameFlag, displayedName]
 

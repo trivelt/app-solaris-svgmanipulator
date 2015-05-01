@@ -31,9 +31,11 @@ class BaseSectionWithSubsectionsWidget(QWidget):
         numberOfSubsections = self.subsectionsDialog.getNumberOfSubsections()
         self.subsectionsLabel.setText("Subsections: " + str(numberOfSubsections))
 
-    def getSectionsData(self):
+    def getSectionData(self):
         subsectionsData = self.subsectionsDialog.getSectionsData()
-        return self.section.getSectionData().extend(subsectionsData)
+        allData = self.section.getSectionData()
+        allData.extend(subsectionsData)
+        return allData
 
     def setColor(self, color):
         self.section.colorLabel.setColor(color)

@@ -58,6 +58,12 @@ class BaseSectionWidget(QWidget):
     def getName(self):
         return self.sectionNameEdit.text()
 
+    def setSize(self, size):
+        self.sizeEdit.setValue(size)
+
+    def getSize(self):
+        return self.sizeEdit.value()
+
     def getSectionData(self):
         name = self.sectionNameEdit.text()
         size = self.sizeEdit.text()
@@ -65,3 +71,4 @@ class BaseSectionWidget(QWidget):
         displayedNameFlag = self.displayedNameCheckBox.isChecked()
         displayedName = self.displayedNameEdit.text()
         return (name, size, color, displayedNameFlag, displayedName)
+

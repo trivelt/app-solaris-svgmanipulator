@@ -24,14 +24,15 @@ class BaseSectionWithSubsectionsWidget(QWidget):
 
         self.connect(self.subsectionsEditButton, QtCore.SIGNAL("clicked()"), self.editSubsections)
         self.connect(self.section, QtCore.SIGNAL("remove()"), QtCore.SIGNAL("remove()"))
+        self.connect(self.section, QtCore.SIGNAL("sizeValueChanged(QWidget*)"), QtCore.SIGNAL("sizeValueChanged(QWidget*)"))
 
     def editSubsections(self):
         self.subsectionsDialog.exec_()
         numberOfSubsections = self.subsectionsDialog.getNumberOfSubsections()
         self.subsectionsLabel.setText("Subsections: " + str(numberOfSubsections))
 
-    def getSectionData(self):
-        subsectionsData = self.subsectionsDialog.getSubsectionsData()
+    def getSectionsData(self):
+        subsectionsData = self.subsectionsDialog.getSectionsData()
         return self.section.getSectionData().extend(subsectionsData)
 
     def setColor(self, color):
@@ -39,3 +40,6 @@ class BaseSectionWithSubsectionsWidget(QWidget):
 
     def setSize(self, size):
         self.section.sizeEdit.setValue(size)
+
+    def getSize(self):
+        return self.section.getSize()

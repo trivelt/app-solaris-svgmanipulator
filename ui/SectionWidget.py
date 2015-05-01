@@ -5,7 +5,7 @@ from src.SettingsCloud import SettingsCloud
 from PyQt4.QtGui import QPushButton, QVBoxLayout, QScrollArea, QWidget, QMessageBox
 from PyQt4.Qt import QRect
 from PyQt4 import QtCore
-from SubsectionContainerWidget import SubsectionContainerWidget
+from BaseSectionWithSubsectionsWidget import BaseSectionWithSubsectionsWidget
 
 
 class SectionWidget(QWidget):
@@ -43,7 +43,7 @@ class SectionWidget(QWidget):
         self.scrollArea.setWidget(self.containerWidget)
 
     def addNewSection(self):
-        newSection = SubsectionContainerWidget(self.containerWidget, self.isLinacSectionWidget)
+        newSection = BaseSectionWithSubsectionsWidget(self.containerWidget, self.isLinacSectionWidget)
         self.setDefaultValues(newSection)
         widgetPosition = len(self.sectionWidgets)
         self.layout.insertWidget(widgetPosition, newSection)

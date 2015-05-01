@@ -4,7 +4,7 @@ from PyQt4 import QtCore
 from BaseSectionWidget import BaseSectionWidget
 from SubsectionsDialog import SubsectionsDialog
 
-class SubsectionContainerWidget(QWidget):
+class BaseSectionWithSubsectionsWidget(QWidget):
     def __init__(self, parent=None, isLinacSectionWidget=True):
         QWidget.__init__(self, parent)
         self.subsectionsDialog = SubsectionsDialog(self, isLinacSectionWidget)

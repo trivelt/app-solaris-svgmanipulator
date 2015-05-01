@@ -5,9 +5,9 @@ from BaseSectionWidget import BaseSectionWidget
 from SubsectionsDialog import SubsectionsDialog
 
 class SubsectionContainerWidget(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, isLinacSectionWidget=True):
         QWidget.__init__(self, parent)
-        self.subsectionsDialog = SubsectionsDialog(self)
+        self.subsectionsDialog = SubsectionsDialog(self, isLinacSectionWidget)
 
         self.resize(450,80)
 
@@ -33,3 +33,9 @@ class SubsectionContainerWidget(QWidget):
     def getSectionData(self):
         subsectionsData = self.subsectionsDialog.getSubsectionsData()
         return self.section.getSectionData().extend(subsectionsData)
+
+    def setColor(self, color):
+        self.section.colorLabel.setColor(color)
+
+    def setSize(self, size):
+        self.section.sizeEdit.setValue(size)

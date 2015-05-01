@@ -20,3 +20,8 @@ class ColorChooser(QLabel):
 
     def getSelectedColor(self):
         return self.selectedColor
+
+    def setColor(self, color):
+        print "Color=" + str(color)
+        self.selectedColor = color
+        self.updateLabelColor()

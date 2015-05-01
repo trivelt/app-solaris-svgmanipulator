@@ -1,3 +1,7 @@
+import sys
+from os import path
+sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
+from src.SettingsCloud import SettingsCloud
 from PyQt4.QtGui import QDialog, QPushButton, QVBoxLayout, QScrollArea, QWidget, QMessageBox
 from PyQt4.Qt import QRect
 from PyQt4 import QtCore
@@ -5,8 +9,9 @@ from BaseSectionWidget import BaseSectionWidget
 
 
 class SubsectionsDialog(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, isLinacSection=True):
         QDialog.__init__(self, parent)
+        self.isLinacSection = isLinacSection
         self.subsectionWidgets = list()
         self.setMinimumWidth(460)
         self.setMinimumHeight(600)
@@ -40,6 +45,7 @@ class SubsectionsDialog(QDialog):
 
     def addNewSection(self):
         newSection = BaseSectionWidget(self.containerWidget)
+        self.setDefaultValues(newSection)
         widgetPosition = len(self.subsectionWidgets)
         self.layout.insertWidget(widgetPosition, newSection)
         self.subsectionWidgets.append(newSection)
@@ -48,6 +54,9 @@ class SubsectionsDialog(QDialog):
         self.containerWidget.resize(460,self.widgetHeight)
 
         self.connect(newSection, QtCore.SIGNAL("remove()"), self.removeSection)
+
+    def setDefaultValues(self, section):
+        section.colorLabel.setColor(SettingsCloud.getParameter("subsectionColor"))
 
     def removeSection(self):
         messageBox = QMessageBox(self)

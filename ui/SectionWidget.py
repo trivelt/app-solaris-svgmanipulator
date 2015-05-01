@@ -1,3 +1,7 @@
+import sys
+from os import path
+sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
+from src.SettingsCloud import SettingsCloud
 from PyQt4.QtGui import QPushButton, QVBoxLayout, QScrollArea, QWidget, QMessageBox
 from PyQt4.Qt import QRect
 from PyQt4 import QtCore
@@ -5,16 +9,16 @@ from SubsectionContainerWidget import SubsectionContainerWidget
 
 
 class SectionWidget(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, isLinacSectionWidget=True):
         QWidget.__init__(self, parent)
         self.sectionWidgets = list()
         self.setMinimumWidth(460)
         self.setMinimumHeight(600)
-
-        #self.setStyleSheet("border:0px solid red;")
+        self.isLinacSectionWidget = isLinacSectionWidget
 
         self.setupLayout()
         self.setupScrollArea()
+
         self.addSectionButton = QPushButton(self.containerWidget)
         self.addSectionButton.setText("Add new section")
         self.layout.addWidget(self.addSectionButton)
@@ -39,7 +43,8 @@ class SectionWidget(QWidget):
         self.scrollArea.setWidget(self.containerWidget)
 
     def addNewSection(self):
-        newSection = SubsectionContainerWidget(self.containerWidget)
+        newSection = SubsectionContainerWidget(self.containerWidget, self.isLinacSectionWidget)
+        self.setDefaultValues(newSection)
         widgetPosition = len(self.sectionWidgets)
         self.layout.insertWidget(widgetPosition, newSection)
         self.sectionWidgets.append(newSection)
@@ -70,3 +75,7 @@ class SectionWidget(QWidget):
         for section in self.sectionWidgets:
             sectionsData.append(section.getSectionData())
         return sectionsData
+
+    def setDefaultValues(self, section):
+        section.setColor(SettingsCloud.getParameter("sectionColor"))
+        print "Is linac section widget? " + str(self.isLinacSectionWidget)

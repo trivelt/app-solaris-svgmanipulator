@@ -1,5 +1,4 @@
 from src.SvgDrawer import SvgDrawer
-
 from PyQt4.QtGui import QMainWindow
 from PyQt4 import QtCore
 from SecondStepWidget import SecondStepWidget

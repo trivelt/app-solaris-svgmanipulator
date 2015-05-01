@@ -42,8 +42,8 @@ class SecondStepWidget(QWidget):
 
 
     def setupSectionWidgets(self):
-        self.linacSections = SectionWidget(self)
-        self.ringSections = SectionWidget(self)
+        self.linacSections = SectionWidget(self, True)
+        self.ringSections = SectionWidget(self, False)
 
         self.layout.addWidget(self.linacSections, 2, 0, QtCore.Qt.AlignCenter)
         self.layout.addWidget(self.ringSections, 2, 1, QtCore.Qt.AlignCenter)

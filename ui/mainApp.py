@@ -1,6 +1,3 @@
-from os import path
-import sys
-sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 from src.SvgDrawer import SvgDrawer
 
 from PyQt4.QtGui import QMainWindow
@@ -16,34 +13,31 @@ class mainApp(QMainWindow):
         self.firstStep = FirstStepWidget()
         self.secondStep = SecondStepWidget()
         self.thirdStep = ThirdStepWidget()
-
-        self.secondStep.setVisible(False)
-        self.thirdStep.setVisible(False)
         self.setCentralWidget(self.firstStep)
 
-        self.connect(self.firstStep, QtCore.SIGNAL("nextStep()"), self.showSecondStep)
+        self.connect(self.firstStep, QtCore.SIGNAL("nextStep()"), self.showSecondStepAfterFirst)
         self.connect(self.secondStep, QtCore.SIGNAL("previousStep()"), self.showFirstStep)
         self.connect(self.secondStep, QtCore.SIGNAL("nextStep()"), self.showThirdStep)
-        self.connect(self.thirdStep, QtCore.SIGNAL("previousStep()"), self.showSecondStep)
-
+        self.connect(self.thirdStep, QtCore.SIGNAL("previousStep()"), self.showSecondStepAfterThird)
         self.connect(self.thirdStep, QtCore.SIGNAL("loadDevices()"), self.loadDevices)
 
     def showFirstStep(self):
-        self.firstStep.setVisible(True)
-        self.secondStep.setVisible(False)
-
         self.secondStep.setParent(None)
         self.setCentralWidget(self.firstStep)
 
-    def showSecondStep(self):
-        self.firstStep.setVisible(False)
-        self.secondStep.setVisible(True)
+    def showSecondStepAfterFirst(self):
         self.firstStep.setParent(None)
+        self.updateDefaultParameters()
+        self.setCentralWidget(self.secondStep)
+
+    def updateDefaultParameters(self):
+        self.firstStep.saveSettings()
+
+    def showSecondStepAfterThird(self):
         self.thirdStep.setParent(None)
         self.setCentralWidget(self.secondStep)
 
     def showThirdStep(self):
-        self.thirdStep.setVisible(True)
         self.secondStep.setParent(None)
         self.setCentralWidget(self.thirdStep)
 

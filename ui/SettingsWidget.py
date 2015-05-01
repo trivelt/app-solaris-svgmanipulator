@@ -1,6 +1,10 @@
+import sys
+from os import path
+sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 from PyQt4.QtGui import QPushButton, QLabel , QWidget, QLineEdit, QHBoxLayout, QVBoxLayout, QDoubleSpinBox
 from PyQt4.QtCore import QRect, Qt
 from ColorChooser import ColorChooser
+from src.SettingsCloud import SettingsCloud
 
 class SettingsWidget(QWidget):
     def __init__(self, parent=None):
@@ -60,7 +64,6 @@ class SettingsWidget(QWidget):
         self.ringSubsectionSizeSpinBox.setMaximum(100.0)
         self.putInHorizontalLayout(ringSubectionSizeLabel, self.ringSubsectionSizeSpinBox)
 
-
         centerCoordinatesLabel = QLabel(self)
         centerCoordinatesLabel.setText("Real coordinates of ring center")
         self.centerCoordinatesEditX = QLineEdit()
@@ -71,6 +74,7 @@ class SettingsWidget(QWidget):
         self.centerCoordinatesEditY.setFixedWidth(80)
         self.putInHorizontalLayout(centerCoordinatesLabel, self.centerCoordinatesEditX, self.centerCoordinatesEditY)
 
+        self.setDefaultSettings()
 
     def putInHorizontalLayout(self, label, edit, secondEdit=None):
         layout = QHBoxLayout()
@@ -79,3 +83,30 @@ class SettingsWidget(QWidget):
         if secondEdit is not None:
             layout.addWidget(secondEdit)
         self.vLayout.addLayout(layout)
+
+    def setDefaultSettings(self):
+        self.linacSectionSizeSpinBox.setValue(25)
+        self.linacSubsectionSizeSpinBox.setValue(50)
+        self.ringSectionSizeSpinBox.setValue(25)
+        self.ringSubsectionSizeSpinBox.setValue(33.33)
+        self.centerCoordinatesEditX.setText("300")
+        self.centerCoordinatesEditY.setText("500")
+
+    def saveSettings(self):
+        sectionColor = self.sectionColorChooser.getSelectedColor()
+        subsectionColor = self.subsectionColorChooser.getSelectedColor()
+        linacSectionSize = self.linacSectionSizeSpinBox.value()
+        linacSubsectionSize = self.linacSubsectionSizeSpinBox.value()
+        ringSectionSize = self.ringSectionSizeSpinBox.value()
+        ringSubsectionSize = self.ringSubsectionSizeSpinBox.value()
+        centerCoordinateX = self.centerCoordinatesEditX.text()
+        centerCoordinateY = self.centerCoordinatesEditY.text()
+
+        SettingsCloud.setParameter("sectionColor", sectionColor)
+        SettingsCloud.setParameter("subsectionColor", subsectionColor)
+        SettingsCloud.setParameter("linacSectionSize", linacSectionSize)
+        SettingsCloud.setParameter("linacSubsectionSize", linacSubsectionSize)
+        SettingsCloud.setParameter("ringSectionSize", ringSectionSize)
+        SettingsCloud.setParameter("ringSubsectionSize", ringSubsectionSize)
+        SettingsCloud.setParameter("centerCoordinateX", centerCoordinateX)
+        SettingsCloud.setParameter("centerCoordinateY", centerCoordinateY)

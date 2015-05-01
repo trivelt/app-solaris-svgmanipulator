@@ -11,18 +11,15 @@ class FirstStepWidget(QWidget):
         self.setMinimumHeight(667)
         self.setMinimumWidth(942)
 
-        #self.layout.setSpacing(0)
-
-        settingsWidget = SettingsWidget(self)
-        #settingsWidget.setMaximumWidth(300)
-        self.layout.addWidget(settingsWidget, 1, 0)
+        self.settingsWidget = SettingsWidget(self)
+        self.layout.addWidget(self.settingsWidget, 1, 0)
 
         nextStepButton = QPushButton(self)
         nextStepButton.setText("Next step")
         nextStepButton.setStyleSheet("background-color:green;color:white;")
         self.layout.addWidget(nextStepButton, 0, 0, -1, 1, QtCore.Qt.AlignTop)
 
-
-
-
         self.connect(nextStepButton, QtCore.SIGNAL("clicked()"), QtCore.SIGNAL("nextStep()"))
+
+    def saveSettings(self):
+        self.settingsWidget.saveSettings()

@@ -34,7 +34,7 @@ class BaseSectionWithSubsectionsWidget(QWidget):
     def getSectionData(self):
         subsectionsData = self.subsectionsDialog.getSectionsData()
         allData = self.section.getSectionData()
-        allData.extend(subsectionsData)
+        allData.append(subsectionsData)
         return allData
 
     def setColor(self, color):

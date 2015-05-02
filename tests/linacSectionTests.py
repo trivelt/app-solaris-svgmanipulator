@@ -200,6 +200,19 @@ class TestSectionElements(unittest.TestCase):
         self.assertEqual(verticalLine.attrib["height"], "109.856")
         self.assertEqual(verticalLine.attrib["style"], "fill:#3c3c3c;fill-opacity:0.74901961")
 
+    def testDisplayedName(self):
+        cSection = LinacSection("C", "green", 640)
+        cSection.setDisplayedName("ABCDEFGH")
+        cSection.updateSvg()
+
+        zoomNode = self.svgFile.getZoom2Background()
+        smallCaption = self.svgFile.getElementById("section3smallText", zoomNode)
+        self.assertEqual(smallCaption.text, "ABCDEFGH")
+
+        zoomNode = self.svgFile.getZoom1Background()
+        bigCaption = self.svgFile.getElementById("section3bigText", zoomNode)
+        self.assertEqual(bigCaption.text, "ABCDEFGH")
+
     def tearDown(self):
         LinacSection.id = 1
 

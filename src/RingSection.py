@@ -137,4 +137,4 @@ class RingSection(RingAbstractSection):
         textPathElement = etree.SubElement(textElement, "textPath")
         textPathElement.attrib["{http://www.w3.org/1999/xlink}href"] = "#" + self.shortName + idName + "Path"
         textPathElement.attrib["startOffset"] = "50%"
-        textPathElement.text = self.longName
+        textPathElement.text = self.displayedName

@@ -30,5 +30,5 @@ class LinacSubsection(LinacAbstractSection):
         textElement.attrib["x"] = str(self.startCoordinate)
         textElement.attrib["y"] = "3682.2803"
         textElement.attrib["style"] = "font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:'Sans, Normal'"
-        textElement.text = self.longName
+        textElement.text = self.displayedName
 

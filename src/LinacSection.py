@@ -74,7 +74,7 @@ class LinacSection(LinacAbstractSection):
         textElement.attrib["x"] = str(self.startCoordinate)
         textElement.attrib["y"] = "3653.7168"
         textElement.attrib["style"] = "font-size:139.74479675px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.75;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:'DejaVu Sans, Normal'"
-        textElement.text = self.longName
+        textElement.text = self.displayedName
 
     def createSmallCaption(self, parentNode):
         textElement = etree.SubElement(parentNode, "text")
@@ -82,7 +82,7 @@ class LinacSection(LinacAbstractSection):
         textElement.attrib["x"] = str(self.startCoordinate+100)
         textElement.attrib["y"] = "3702.2803"
         textElement.attrib["style"] = "font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:'Sans, Normal'"
-        textElement.text = self.longName
+        textElement.text = self.displayedName
 
     def createBottomRect(self, parentNode):
         rectElement = etree.SubElement(parentNode, "rect")

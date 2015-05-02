@@ -14,6 +14,7 @@ from ringSubsectionTests import TestRingSubsection
 from iconTests import TestIcon
 from svgTests import TestSvg
 from arcDrawingToolsTests import TestArcTools
+from settingsCloudTests import TestSettingsCloud
 import unittest
 
 unittest.main()

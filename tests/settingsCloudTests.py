@@ -5,7 +5,7 @@ sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 import unittest
 from src.SettingsCloud import SettingsCloud
 
-class TestSvg(unittest.TestCase):
+class TestSettingsCloud(unittest.TestCase):
     def setUp(self):
         SettingsCloud.resetSettings()
 

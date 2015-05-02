@@ -69,20 +69,13 @@ class LinacSection(LinacAbstractSection):
         return devices
 
     def createBigCaption(self, parentNode):
-        textElement = etree.SubElement(parentNode, "text")
-        textElement.attrib["id"] = self.shortName + "bigText"
-        textElement.attrib["x"] = str(self.startCoordinate)
-        textElement.attrib["y"] = "3653.7168"
-        textElement.attrib["style"] = "font-size:139.74479675px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.75;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:'DejaVu Sans, Normal'"
-        textElement.text = self.displayedName
+        style = "font-size:150.0px;font-style:normal;'"
+        self.drawText(parentNode, 3650, "BigCaption", style)
 
     def createSmallCaption(self, parentNode):
-        textElement = etree.SubElement(parentNode, "text")
-        textElement.attrib["id"] = self.shortName + "smallText"
-        textElement.attrib["x"] = str(self.startCoordinate+100)
-        textElement.attrib["y"] = "3702.2803"
-        textElement.attrib["style"] = "font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:'Sans, Normal'"
-        textElement.text = self.displayedName
+        style = "font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;" \
+                "font-family:Sans;-inkscape-font-specification:'Sans, Normal'"
+        self.drawText(parentNode, 3702, "SmallCaption", style)
 
     def createBottomRect(self, parentNode):
         rectElement = etree.SubElement(parentNode, "rect")
@@ -114,6 +107,27 @@ class LinacSection(LinacAbstractSection):
         rectElement.attrib["width"] = "0.85600001"
         rectElement.attrib["height"] = "109.856"
         rectElement.attrib["style"] = "fill:#3c3c3c;fill-opacity:0.74901961"
+
+    def drawText(self, parentNode, yCoord, idName, style):
+        defs = self.svgFile.getElementById("defs8812", self.svgRoot)
+        pathDef = etree.SubElement(defs, "path")
+        pathDef.attrib["id"] = self.shortName + idName + "Path"
+        pathDef.attrib["d"] = self.computeCaptionPath(yCoord)
+
+        textElement = etree.SubElement(parentNode, "text")
+        textElement.attrib["id"] = self.shortName + idName
+        textElement.attrib["style"] = style
+        textElement.attrib["text-anchor"] = "middle"
+
+        textPathElement = etree.SubElement(textElement, "textPath")
+        textPathElement.attrib["{http://www.w3.org/1999/xlink}href"] = "#" + self.shortName + idName + "Path"
+        textPathElement.attrib["startOffset"] = "50%"
+        textPathElement.attrib["id"] = self.shortName + idName + "TextPath"
+        textPathElement.text = self.displayedName
+
+    def computeCaptionPath(self, yCoord):
+        path = ["M", self.startCoordinate, yCoord, "l", self.width, 0]
+        return " ".join([str(x) for x in path])
 
     def updateZoom1(self):
         zoomNode = self.svgFile.getZoom1Background()

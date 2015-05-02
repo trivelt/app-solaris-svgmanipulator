@@ -25,10 +25,20 @@ class LinacSubsection(LinacAbstractSection):
         rectElement.attrib["style"] = "fill:" + self.colour + ";fill-opacity:0.49803922;stroke:none;display:inline"
 
     def createTextElement(self, parentNode):
-        textElement = etree.SubElement(parentNode, "text")
-        textElement.attrib["id"] = self.shortName + "smallText"
-        textElement.attrib["x"] = str(self.startCoordinate)
-        textElement.attrib["y"] = "3682.2803"
-        textElement.attrib["style"] = "font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:'Sans, Normal'"
-        textElement.text = self.displayedName
+        style = "font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;" \
+                "font-family:Sans;-inkscape-font-specification:'Sans, Normal'"
+        defs = self.svgFile.getElementById("defs8812", self.svgRoot)
+        pathDef = etree.SubElement(defs, "path")
+        pathDef.attrib["id"] = self.shortName + "SmallCaptionPath"
+        pathDef.attrib["d"] = "M " + str(self.startCoordinate) + " 3682 l " + str(self.width) + " 0"
 
+        textElement = etree.SubElement(parentNode, "text")
+        textElement.attrib["id"] = self.shortName + "SmallCaption"
+        textElement.attrib["style"] = style
+        textElement.attrib["text-anchor"] = "middle"
+
+        textPathElement = etree.SubElement(textElement, "textPath")
+        textPathElement.attrib["{http://www.w3.org/1999/xlink}href"] = "#" + self.shortName + "SmallCaptionPath"
+        textPathElement.attrib["startOffset"] = "50%"
+        textPathElement.attrib["id"] = self.shortName + "SmallCaptionTextPath"
+        textPathElement.text = self.displayedName

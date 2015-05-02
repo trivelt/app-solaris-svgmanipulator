@@ -47,9 +47,9 @@ class TestLinacSubsection(unittest.TestCase):
         subsection = LinacSubsection(self.name, self.colour, self.coord, self.width)
         subsection.updateSvg()
         zoomNode = self.svgFile.getZoom2Background()
-        textElement = self.svgFile.getElementById("linacSubsection1smallText", zoomNode)
+        textElementNode = self.svgFile.getElementById("linacSubsection1SmallCaption", zoomNode)
+        textElement = self.svgFile.getElementById("linacSubsection1SmallCaptionTextPath", textElementNode)
 
-        self.assertEqual(textElement.attrib["x"], str(self.coord))
         self.assertEqual(textElement.text, self.name)
 
 

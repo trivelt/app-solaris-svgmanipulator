@@ -18,6 +18,7 @@ class RingSection(RingAbstractSection):
         startAngle = self.computeSubsectionStartAngle()
         newSubsection = RingSubsection(name, colour, startAngle, angle)
         self.subsections.append(newSubsection)
+        print("Adding subsection " + name + " to the section " + self.longName)
         return newSubsection
 
     def computeSubsectionStartAngle(self):

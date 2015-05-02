@@ -22,6 +22,7 @@ class LinacSection(LinacAbstractSection):
             return
         newSubsection = LinacSubsection(name, colour, startCoordinate, width)
         self.subsections.append(newSubsection)
+        print("Adding subsection " + name + " to the section " + self.longName)
         return newSubsection
 
     def computeSubsectionStartCoordinate(self):

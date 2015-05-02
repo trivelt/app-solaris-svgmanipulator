@@ -10,6 +10,7 @@ class Ring(Accelerator):
         startAngle = self.computeNewSectionStartAngle()
         newSection = RingSection(name, colour, startAngle, angleInDegrees)
         self.sections.append(newSection)
+        print("Adding new section " + name + " to the ring")
         return newSection
 
     def computeNewSectionStartAngle(self):

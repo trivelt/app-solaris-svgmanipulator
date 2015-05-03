@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QPushButton, QLabel, QGridLayout, QWidget, QLineEdit
+from PyQt4.QtGui import QPushButton, QLabel, QGridLayout, QWidget, QLineEdit, QFileDialog
 from PyQt4 import QtCore
 
 class ThirdStepWidget(QWidget):
@@ -36,6 +36,11 @@ class ThirdStepWidget(QWidget):
         self.fileLocationEdit.setText("new.svg")
         self.layout.addWidget(self.fileLocationEdit, 2, 1, QtCore.Qt.AlignTop)
 
+        chooseFileButton = QPushButton(self)
+        chooseFileButton.setText("...")
+        self.layout.addWidget(chooseFileButton, 2, 2, QtCore.Qt.AlignTop)
+        self.connect(chooseFileButton, QtCore.SIGNAL("clicked()"), self.chooseFile)
+
         loadButton = QPushButton(self)
         loadButton.setText("Load devices and create SVG")
         self.layout.addWidget(loadButton, 3,0, 1, -1, QtCore.Qt.AlignTop)
@@ -46,3 +51,8 @@ class ThirdStepWidget(QWidget):
 
     def getTangoHost(self):
         return str(self.tangoHostEdit.text())
+
+    def chooseFile(self):
+        fileChooser = QFileDialog()
+        chooseFile = fileChooser.getSaveFileName()
+        self.fileLocationEdit.setText(chooseFile)

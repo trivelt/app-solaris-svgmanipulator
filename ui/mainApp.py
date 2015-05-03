@@ -1,3 +1,4 @@
+import os
 from src.SvgDrawer import SvgDrawer
 from PyQt4.QtGui import QMainWindow
 from PyQt4 import QtCore
@@ -43,13 +44,20 @@ class mainApp(QMainWindow):
 
     def loadDevices(self):
         svgDrawer = SvgDrawer()
-        svgDrawer.loadSvg("../src/blank.svg")
+        svgDrawer.loadSvg(self.getBaseSvgPath())
         svgDrawer.setTangoHost(self.thirdStep.getTangoHost())
 
         self.processSectionsData(svgDrawer)
 
         svgDrawer.drawAll()
-        svgDrawer.saveSvg("../testImage.svg")
+        destinationFile = self.thirdStep.getFilePath()
+        svgDrawer.saveSvg(destinationFile)
+
+    def getBaseSvgPath(self):
+        currentFilePath = os.path.realpath(__file__)
+        currentDirPath = os.path.dirname(currentFilePath)
+        baseSvgPath = currentDirPath + "/../src/blank.svg"
+        return baseSvgPath
 
     def processSectionsData(self, svgDrawer):
         dataProcessor = SectionsDataProcesssor(svgDrawer)

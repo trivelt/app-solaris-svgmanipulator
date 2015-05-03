@@ -44,6 +44,7 @@ class mainApp(QMainWindow):
     def loadDevices(self):
         svgDrawer = SvgDrawer()
         svgDrawer.loadSvg("../src/blank.svg")
+        svgDrawer.setTangoHost(self.thirdStep.getTangoHost())
 
         self.processSectionsData(svgDrawer)
 
@@ -56,3 +57,4 @@ class mainApp(QMainWindow):
         ringSectionsData = self.secondStep.getRingData()
         dataProcessor.processLinacSections(linacSectionsData)
         dataProcessor.processRingSections(ringSectionsData)
+        dataProcessor.drawLastSectionIfNecessary()

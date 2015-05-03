@@ -25,7 +25,7 @@ class ThirdStepWidget(QWidget):
         self.layout.addWidget(tangoHostLabel, 1, 0, QtCore.Qt.AlignTop)
 
         self.tangoHostEdit = QLineEdit(self)
-        self.tangoHostEdit.setText("192.168.130.200:10000")
+        self.tangoHostEdit.setText("127.0.0.1:10000")
         self.layout.addWidget(self.tangoHostEdit, 1, 1, QtCore.Qt.AlignTop)
 
         fileLocationLabel = QLabel(self)
@@ -40,3 +40,9 @@ class ThirdStepWidget(QWidget):
         loadButton.setText("Load devices and create SVG")
         self.layout.addWidget(loadButton, 3,0, 1, -1, QtCore.Qt.AlignTop)
         self.connect(loadButton, QtCore.SIGNAL("clicked()"), QtCore.SIGNAL("loadDevices()"))
+
+    def getFilePath(self):
+        return str(self.fileLocationEdit.text())
+
+    def getTangoHost(self):
+        return str(self.tangoHostEdit.text())

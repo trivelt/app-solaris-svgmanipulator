@@ -15,7 +15,7 @@ class Ring(Accelerator):
 
     def computeNewSectionStartAngle(self):
         if len(self.sections) == 0:
-            return -90
+            return -65
         else:
             lastSection = self.sections[-1]
             return lastSection.endAngle

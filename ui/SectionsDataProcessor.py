@@ -5,11 +5,14 @@ from src.Ring import RingSection
 class SectionsDataProcesssor:
     def __init__(self, svgDrawer):
         self.svgDrawer = svgDrawer
+        self.sumOfLinacSectionsWidth = 0
+        self.sumOfRingSectionWidth = 0
 
     def processLinacSections(self, sectionsData):
         for section in sectionsData:
             [name, color, sizeInPercent, displayedNameFlag, displayedName, subsectionsData] = self.processSectionData(section)
             widthInPixels = sizeInPercent * 7770.0
+            self.sumOfLinacSectionsWidth += sizeInPercent
             newSection = self.svgDrawer.addSectionToLinac(name, color, widthInPixels)
             self.setDisplayedNameIfNecessary(newSection, displayedNameFlag, displayedName)
             self.processSubsectionsData(newSection, subsectionsData)
@@ -18,6 +21,7 @@ class SectionsDataProcesssor:
         for section in sectionsData:
             [name, color, sizeInPercent, displayedNameFlag, displayedName, subsectionsData] = self.processSectionData(section)
             angleInDegrees = sizeInPercent * 360.0
+            self.sumOfRingSectionWidth += sizeInPercent
             newSection = self.svgDrawer.addSectionToRing(name, color, angleInDegrees)
             self.setDisplayedNameIfNecessary(newSection, displayedNameFlag, displayedName)
             self.processSubsectionsData(newSection, subsectionsData)
@@ -49,3 +53,13 @@ class SectionsDataProcesssor:
     def setDisplayedNameIfNecessary(self, section, displayedNameFlag, displayedName):
         if displayedNameFlag == True:
             section.setDisplayedName(displayedName)
+
+    def drawLastSectionIfNecessary(self):
+        if self.sumOfLinacSectionsWidth < 1.0:
+            widthInPixels = (1.0 - self.sumOfLinacSectionsWidth) * 7770.0
+            self.svgDrawer.addSectionToLinac("", "#b3b3b3", widthInPixels)
+        if self.sumOfRingSectionWidth < 1.0:
+            angle = (1.0 - self.sumOfRingSectionWidth) * 360.0
+            if angle == 360.0:
+                angle = 359.9999
+            self.svgDrawer.addSectionToRing("", "#b3b3b3", angle)

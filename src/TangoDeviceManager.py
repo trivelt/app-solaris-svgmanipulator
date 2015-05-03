@@ -5,12 +5,13 @@ from Icon import Icon
 
 class TangoDeviceManager:
     def __init__(self):
-        self.setTangoDatabaseAddress("192.168.130.200:10000")
+        #self.setTangoDatabaseAddress("192.168.130.200:10000")
         self.database = PyTango.Database()
         self.devices = []
 
     def setTangoDatabaseAddress(self, address):
         # default = 192.168.130.100:10000
+        print("Setting TANGO_HOST to " +  str(address))
         os.environ['TANGO_HOST'] = address
 
     def getDevices(self):

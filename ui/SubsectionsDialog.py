@@ -7,12 +7,25 @@ from BaseSectionWidget import BaseSectionWidget
 from SectionsContainerWidget import SectionsContainerWidget
 
 class subsectionContainerWidget(SectionsContainerWidget):
+    lastSectionColor = None
+
     def __init__(self, parent=None, isLinacSectionWidget=True):
         SectionsContainerWidget.__init__(self, parent, isLinacSectionWidget, BaseSectionWidget)
 
     def setDefaultValues(self, section):
-        section.colorLabel.setColor(SettingsCloud.getParameter("subsectionColor"))
+        #section.colorLabel.setColor(SettingsCloud.getParameter("subsectionColor"))
+        self.setSectionColor(section)
         self.setSectionSize(section)
+
+    def setSectionColor(self, section):
+        firstColor = SettingsCloud.getParameter("subsectionFirstColor")
+        secondColor = SettingsCloud.getParameter("subsectionSecondColor")
+        if subsectionContainerWidget.lastSectionColor == secondColor:
+            section.colorLabel.setColor(firstColor)
+            subsectionContainerWidget.lastSectionColor = firstColor
+        else:
+            section.colorLabel.setColor(secondColor)
+            subsectionContainerWidget.lastSectionColor = secondColor
 
     def setSectionSize(self, section):
         if self.isLinacSection:

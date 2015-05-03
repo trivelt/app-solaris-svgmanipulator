@@ -25,16 +25,20 @@ class SettingsWidget(QWidget):
         self.vLayout.addWidget(settingsLabel)
 
         sectionColorLabel = QLabel(self)
-        sectionColorLabel.setText("Section color:")
+        sectionColorLabel.setText("Section colors:")
         self.sectionColorChooser = ColorChooser()
-        self.sectionColorChooser.setMaximumWidth(100)
-        self.putInHorizontalLayout(sectionColorLabel, self.sectionColorChooser)
+        self.sectionColorChooser.setMaximumWidth(50)
+        self.sectionSecondColorChooser = ColorChooser()
+        self.sectionSecondColorChooser.setMaximumWidth(50)
+        self.putInHorizontalLayout(sectionColorLabel, self.sectionColorChooser, self.sectionSecondColorChooser)
 
         subsectionColorLabel = QLabel(self)
-        subsectionColorLabel.setText("Subsection color: ")
+        subsectionColorLabel.setText("Subsection colors: ")
         self.subsectionColorChooser = ColorChooser(self)
-        self.subsectionColorChooser.setMaximumWidth(100)
-        self.putInHorizontalLayout(subsectionColorLabel, self.subsectionColorChooser)
+        self.subsectionColorChooser.setMaximumWidth(50)
+        self.subsectionSecondColorChooser = ColorChooser(self)
+        self.subsectionSecondColorChooser.setMaximumWidth(50)
+        self.putInHorizontalLayout(subsectionColorLabel, self.subsectionColorChooser, self.subsectionSecondColorChooser)
 
         linacSectionSizeLabel = QLabel(self)
         linacSectionSizeLabel.setText("Linac section size: ")
@@ -88,7 +92,7 @@ class SettingsWidget(QWidget):
         layout.addWidget(label, Qt.AlignLeft)
         layout.addWidget(edit, Qt.AlignRight)
         if secondEdit is not None:
-            layout.addWidget(secondEdit)
+            layout.addWidget(secondEdit, Qt.AlignRight)
         self.vLayout.addLayout(layout)
 
     def setDefaultSettings(self):
@@ -100,8 +104,10 @@ class SettingsWidget(QWidget):
         self.centerCoordinatesEditY.setText("500")
 
     def saveSettings(self):
-        sectionColor = self.sectionColorChooser.getSelectedColor()
+        sectionFirstColor = self.sectionColorChooser.getSelectedColor()
+        sectionSecondColor = self.sectionSecondColorChooser.getSelectedColor()
         subsectionColor = self.subsectionColorChooser.getSelectedColor()
+        subsectionSecondColor = self.subsectionSecondColorChooser.getSelectedColor()
         linacSectionSize = self.linacSectionSizeSpinBox.value()
         linacSubsectionSize = self.linacSubsectionSizeSpinBox.value()
         ringSectionSize = self.ringSectionSizeSpinBox.value()
@@ -110,8 +116,10 @@ class SettingsWidget(QWidget):
         centerCoordinateY = self.centerCoordinatesEditY.text()
         deviceCaptions = bool(self.showDeviceCaptionsCheckBox.isChecked())
 
-        SettingsCloud.setParameter("sectionColor", sectionColor)
-        SettingsCloud.setParameter("subsectionColor", subsectionColor)
+        SettingsCloud.setParameter("sectionFirstColor", sectionFirstColor)
+        SettingsCloud.setParameter("sectionSecondColor", sectionSecondColor)
+        SettingsCloud.setParameter("subsectionFirstColor", subsectionColor)
+        SettingsCloud.setParameter("subsectionSecondColor", subsectionSecondColor)
         SettingsCloud.setParameter("linacSectionSize", linacSectionSize)
         SettingsCloud.setParameter("linacSubsectionSize", linacSubsectionSize)
         SettingsCloud.setParameter("ringSectionSize", ringSectionSize)

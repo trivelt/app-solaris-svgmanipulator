@@ -1,3 +1,4 @@
+from SettingsCloud import SettingsCloud
 from ArcDrawingTools import ArcDrawingTools
 from lxml import etree
 import svg
@@ -49,7 +50,6 @@ class Device:
         else:
             self.assignSvgCoordinatesForRingDevice()
 
-
     def assignSvgCoordinatesForLinacDevice(self):
         self.svgCoordinateY = 3585
         if self.numberInSection == 0:
@@ -73,7 +73,8 @@ class Device:
         subsystemNode = svgFile.getSubsystemZoomNode(self.subsystemName)
 
         self.drawDeviceIcon(subsystemNode)
-        self.drawDeviceCaption(subsystemNode)
+        if SettingsCloud.getParameter("deviceCaptions") == True:
+            self.drawDeviceCaption(subsystemNode)
 
     def drawDeviceIcon(self, parentNode):
         deviceElement = etree.SubElement(parentNode, "use")

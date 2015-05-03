@@ -1,7 +1,7 @@
 import sys
 from os import path
 sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
-from PyQt4.QtGui import QPushButton, QLabel , QWidget, QLineEdit, QHBoxLayout, QVBoxLayout, QDoubleSpinBox
+from PyQt4.QtGui import QPushButton, QLabel , QWidget, QLineEdit, QHBoxLayout, QVBoxLayout, QDoubleSpinBox, QCheckBox
 from PyQt4.QtCore import QRect, Qt
 from ColorChooser import ColorChooser
 from src.SettingsCloud import SettingsCloud
@@ -65,7 +65,7 @@ class SettingsWidget(QWidget):
         self.putInHorizontalLayout(ringSubectionSizeLabel, self.ringSubsectionSizeSpinBox)
 
         centerCoordinatesLabel = QLabel(self)
-        centerCoordinatesLabel.setText("Real coordinates of ring center")
+        centerCoordinatesLabel.setText("Real coordinates of ring center:")
         self.centerCoordinatesEditX = QLineEdit()
         self.centerCoordinatesEditX.setPlaceholderText("X")
         self.centerCoordinatesEditX.setFixedWidth(80)
@@ -73,6 +73,13 @@ class SettingsWidget(QWidget):
         self.centerCoordinatesEditY.setPlaceholderText("Y")
         self.centerCoordinatesEditY.setFixedWidth(80)
         self.putInHorizontalLayout(centerCoordinatesLabel, self.centerCoordinatesEditX, self.centerCoordinatesEditY)
+
+        showDeviceCaptionsLabel = QLabel(self)
+        showDeviceCaptionsLabel.setText("Show device captions:")
+        showDeviceCaptionsLabel.setFixedWidth(500)
+        self.showDeviceCaptionsCheckBox = QCheckBox(self)
+        self.showDeviceCaptionsCheckBox.setChecked(True)
+        self.putInHorizontalLayout(showDeviceCaptionsLabel, self.showDeviceCaptionsCheckBox)
 
         self.setDefaultSettings()
 
@@ -101,6 +108,7 @@ class SettingsWidget(QWidget):
         ringSubsectionSize = self.ringSubsectionSizeSpinBox.value()
         centerCoordinateX = self.centerCoordinatesEditX.text()
         centerCoordinateY = self.centerCoordinatesEditY.text()
+        deviceCaptions = bool(self.showDeviceCaptionsCheckBox.isChecked())
 
         SettingsCloud.setParameter("sectionColor", sectionColor)
         SettingsCloud.setParameter("subsectionColor", subsectionColor)
@@ -110,3 +118,4 @@ class SettingsWidget(QWidget):
         SettingsCloud.setParameter("ringSubsectionSize", ringSubsectionSize)
         SettingsCloud.setParameter("centerCoordinateX", centerCoordinateX)
         SettingsCloud.setParameter("centerCoordinateY", centerCoordinateY)
+        SettingsCloud.setParameter("deviceCaptions", deviceCaptions)

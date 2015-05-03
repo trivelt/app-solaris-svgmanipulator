@@ -22,11 +22,11 @@ class TestRing(unittest.TestCase):
     def testAddSection(self):
         firstSection = self.ring.addSection("R1-01", None, 90)
         self.assertEqual(firstSection.longName, "R1-01")
-        self.assertEqual(firstSection.startAngle, -90)
+        self.assertEqual(firstSection.startAngle, -65)
         self.assertEqual(firstSection.angle, 90)
 
         secondSection = self.ring.addSection("R1-02", None, 30)
-        self.assertEqual(secondSection.startAngle, 0)
+        self.assertEqual(secondSection.startAngle, 25)
         self.assertEqual(secondSection.angle, 30)
 
     def testGetSection(self):

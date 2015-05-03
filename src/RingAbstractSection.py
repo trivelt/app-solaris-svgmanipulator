@@ -29,8 +29,8 @@ class RingAbstractSection(Section):
         self.assignNumbersInSection()
 
     def compare(self, dev1, dev2):
-        a = dev1.realCoordinates
-        b = dev2.realCoordinates
+        a = list(dev1.realCoordinates)
+        b = list(dev2.realCoordinates)
 
         a[0] += self.centerX
         b[0] += self.centerX

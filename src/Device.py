@@ -72,7 +72,11 @@ class Device:
         svgRoot = svgFile.getSvg()
         subsystemNode = svgFile.getSubsystemZoomNode(self.subsystemName)
 
-        deviceElement = etree.SubElement(subsystemNode, "use")
+        self.drawDeviceIcon(subsystemNode)
+        self.drawDeviceCaption(subsystemNode)
+
+    def drawDeviceIcon(self, parentNode):
+        deviceElement = etree.SubElement(parentNode, "use")
         deviceElement.attrib["id"] = self.generateSimpleName()
         deviceElement.attrib["{http://www.w3.org/1999/xlink}href"] = "#" + self.icon.name
         deviceElement.attrib["x"] = str(self.svgCoordinateX)
@@ -82,11 +86,41 @@ class Device:
         descElement.attrib["id"] = self.generateSimpleName() + "Desc"
         descElement.text = "device=" + self.name
 
+    def drawDeviceCaption(self, parentNode):
+        if self.isLinacElement():
+            self.drawLinacDeviceCaption(parentNode)
+        else:
+            self.drawRingDeviceCaption(parentNode)
+
+    def drawLinacDeviceCaption(self, parentNode):
+        textElement = etree.SubElement(parentNode, "text")
+        textElement.attrib["id"] = self.generateSimpleName() + "Caption"
+        textElement.attrib["style"] = "font-size:10px;"
+        textElement.attrib["x"] = str(self.svgCoordinateX + 2)
+        textElement.attrib["y"] = str(self.svgCoordinateY + 40)
+        textElement.attrib["transform"] = "rotate(45, " + str(self.svgCoordinateX+2) + ", " \
+                                          + str(self.svgCoordinateY + 40) + ")"
+        textElement.text = self.getShortName()
+
+    def drawRingDeviceCaption(self, parentNode):
+        textElement = etree.SubElement(parentNode, "text")
+        textElement.attrib["id"] = self.generateSimpleName() + "Caption"
+        textElement.attrib["style"] = "font-size:10px;"
+        textElement.attrib["x"] = str(self.svgCoordinateX + 10)
+        textElement.attrib["y"] = str(self.svgCoordinateY + 0)
+        #textElement.attrib["transform"] = "rotate(45, " + str(self.svgCoordinateX+2) + ", " + str(self.svgCoordinateY+1) + ")"
+        textElement.text = self.getShortName()
+
     def generateSimpleName(self):
         simpleName = self.name.lower()
         simpleName = simpleName.replace("-", "")
         simpleName = simpleName.replace("/", "")
         return simpleName
+
+    def getShortName(self):
+        nameParts = self.name.split("-")
+        if len(nameParts) > 0:
+            return nameParts[-1]
 
     def isRingElement(self):
         return self.getSectionName().startswith("R1-")

@@ -117,6 +117,13 @@ class TestDevice(unittest.TestCase):
         descriptionNode = svgFile.getElementById("ik01vacik01cab05vacipcu1Desc", deviceNode)
         self.assertEqual(descriptionNode.text, "device=I-K01/VAC/I-K01CAB05-VAC-IPCU1")
 
+    def testShortName(self):
+        firstDevice = Device("I-K01/VAC/I-K01CAB05-VAC-IPCU1", None, None)
+        secondDevice = Device("R1-SGA/MAG/R1-SGACAB14-MAG-PS04", None, None)
+
+        self.assertEqual(firstDevice.getShortName(), "IPCU1")
+        self.assertEqual(secondDevice.getShortName(), "PS04")
+
     def tearDown(self):
         pass
 

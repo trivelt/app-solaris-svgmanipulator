@@ -32,6 +32,29 @@ class TestRingAbstractSection(unittest.TestCase):
         ringASection.addDevice(Device("b", None, None))
         self.assertEqual(ringASection.getAngleBetweenDevices(), 30)
 
+    def testSortDevices(self):
+        D1 = Device("D1", None, [0,1])
+        D2 = Device("D2", None, [1, 0])
+        D3 = Device("D3", None, [0, -1])
+        D4 = Device("D4", None, [-1,0 ])
+
+        section = RingAbstractSection("R1-01", "green", 0, 360)
+        section.centerX = 0.0
+        section.centerY = 0.0
+        section.addDevice(D2)
+        section.addDevice(D4)
+        section.addDevice(D1)
+        section.addDevice(D3)
+        self.assertEqual(section.devices[0], D2)
+        self.assertEqual(section.devices[3], D3)
+
+        section.sortDevices()
+
+        self.assertEqual(section.devices[0], D1)
+        self.assertEqual(section.devices[3], D4)
+
+
+
     def tearDown(self):
         pass
 

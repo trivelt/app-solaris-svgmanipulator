@@ -163,7 +163,7 @@ class TestSectionElements(unittest.TestCase):
         self.assertEqual(bigRect.attrib["y"], "3495")
         self.assertEqual(bigRect.attrib["width"], "630")
         self.assertEqual(bigRect.attrib["height"], "209.99997")
-        self.assertEqual(bigRect.attrib["style"], "fill:grey;fill-opacity:0.49803922;stroke:none")
+        self.assertEqual(bigRect.attrib["style"], "fill:grey;fill-opacity:0.79803922;stroke:none")
         secondBigCaption = self.svgFile.getElementById("section2bigRect", zoomNode)
         self.assertEqual(secondBigCaption.attrib["x"], "630")
         self.assertEqual(secondBigCaption.attrib["y"], "3495")
@@ -182,7 +182,7 @@ class TestSectionElements(unittest.TestCase):
         self.assertEqual(bottomRect.attrib["y"], "3685")
         self.assertEqual(bottomRect.attrib["width"], "630")
         self.assertEqual(bottomRect.attrib["height"], "19.999943")
-        self.assertEqual(bottomRect.attrib["style"], "fill:#ffaaaa;fill-opacity:0.49803922;stroke:none;display:inline")
+        self.assertEqual(bottomRect.attrib["style"], "fill:grey;fill-opacity:0.79803922;stroke:none;display:inline")
 
     def testVerticalLine(self):
         zoomNode = self.svgFile.getZoom2Background()

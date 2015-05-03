@@ -84,7 +84,7 @@ class LinacSection(LinacAbstractSection):
         rectElement.attrib["y"] = "3685"
         rectElement.attrib["width"] = str(self.width)
         rectElement.attrib["height"] = "19.999943"
-        rectElement.attrib["style"] = "fill:#ffaaaa;fill-opacity:0.49803922;stroke:none;display:inline"
+        rectElement.attrib["style"] = "fill:" + str(self.colour) + ";fill-opacity:0.79803922;stroke:none;display:inline"
 
     def createBigRect(self, parentNode):
         rectElement = etree.SubElement(parentNode, "rect")
@@ -93,7 +93,7 @@ class LinacSection(LinacAbstractSection):
         rectElement.attrib["y"] = "3495"
         rectElement.attrib["width"] = str(self.width)
         rectElement.attrib["height"] = "209.99997"
-        rectElement.attrib["style"] = "fill:" + self.colour + ";fill-opacity:0.49803922;stroke:none"
+        rectElement.attrib["style"] = "fill:" + self.colour + ";fill-opacity:0.79803922;stroke:none"
 
         descElement = etree.SubElement(rectElement, "desc")
         descElement.attrib["id"] = self.shortName + "desc"

@@ -65,8 +65,8 @@ class TangoDeviceManager:
                 print("Device " + device.name + " has not set coordinate properties")
                 deviceToRemove.append(device)
             else:
-                yCoord = yCoordProperty["y"][0]
-                xCoord = xCoordProperty["x"][0]
+                yCoord = float(yCoordProperty["y"][0])
+                xCoord = float(xCoordProperty["x"][0])
                 device.realCoordinates = [xCoord, yCoord]
         for device in deviceToRemove:
             self.devices.remove(device)

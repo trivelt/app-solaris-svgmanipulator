@@ -1,4 +1,5 @@
 from math import atan2, pi
+from SettingsCloud import SettingsCloud
 from Section import Section
 
 class RingAbstractSection(Section):
@@ -10,6 +11,12 @@ class RingAbstractSection(Section):
         self.centerX = 11989.075
         self.centerY = 4827.0225
         self.radius = 2705.4143
+        self.realCenterX = SettingsCloud.getParameter("centerCoordinateX")
+        self.realCenterY = SettingsCloud.getParameter("centerCoordinateY")
+        if self.realCenterX == None:
+            self.realCenterX = 0
+        if self.realCenterY == None:
+            self.realCenterY = 0
 
     def isInUpperHalf(self):
         numbersOfAngle = [x for x in range(int(self.startAngle), int(self.endAngle))]
@@ -32,10 +39,10 @@ class RingAbstractSection(Section):
         a = list(dev1.realCoordinates)
         b = list(dev2.realCoordinates)
 
-        a[0] += self.centerX
-        b[0] += self.centerX
-        a[1] += self.centerY
-        b[1] += self.centerY
+        a[0] += self.realCenterX
+        b[0] += self.realCenterX
+        a[1] += self.realCenterY
+        b[1] += self.realCenterY
 
         phiA = atan2(a[1], a[0])
         phiB = atan2(b[1], b[0])

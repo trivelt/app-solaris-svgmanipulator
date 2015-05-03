@@ -12,7 +12,7 @@ class FirstStepWidget(QWidget):
         self.setMinimumWidth(942)
 
         self.settingsWidget = SettingsWidget(self)
-        self.layout.addWidget(self.settingsWidget, 1, 0)
+        self.layout.addWidget(self.settingsWidget, 0, 0, QtCore.Qt.AlignCenter)
 
         nextStepButton = QPushButton(self)
         nextStepButton.setText("Next step")

@@ -5,14 +5,29 @@ from Icon import Icon
 
 class TangoDeviceManager:
     def __init__(self):
-        #self.setTangoDatabaseAddress("192.168.130.200:10000")
-        self.database = PyTango.Database()
+        try:
+            self.database = PyTango.Database()
+            self.initialized = True
+        except:
+            self.initialized = False
+            print("TangoDeviceManager could not be initialized: problem with TANGO database connection")
         self.devices = []
 
-    def setTangoDatabaseAddress(self, address):
-        # default = 192.168.130.100:10000
+    @staticmethod
+    def setTangoDatabaseAddress(address):
         print("Setting TANGO_HOST to " +  str(address))
         os.environ['TANGO_HOST'] = address
+
+    @staticmethod
+    def canConnectToTango():
+        try:
+            testProxyDevice = PyTango.DeviceProxy("test")
+        except PyTango.ConnectionFailed:
+            print("Could not connect to TANGO database")
+            return False
+        except PyTango.DevFailed:
+            return True
+        return True
 
     def getDevices(self):
         allTangoDevices = self.getAllDevicesFromDatabase()

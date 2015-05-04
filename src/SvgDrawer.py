@@ -8,11 +8,11 @@ class SvgDrawer:
     def __init__(self):
         self.linac = Linac()
         self.ring = Ring()
-        self.tDeviceManager = TangoDeviceManager()
+        self.tDeviceManager = None
         self.svgFile = None
 
     def setTangoHost(self, tangoHost):
-        self.tDeviceManager.setTangoDatabaseAddress(tangoHost)
+        TangoDeviceManager.setTangoDatabaseAddress(tangoHost)
 
     def loadSvg(self, svgPath):
         svgTree = etree.parse(svgPath)
@@ -35,12 +35,14 @@ class SvgDrawer:
         section.addSubsection(subsectionName, colour, widthOrAngle)
 
     def drawAll(self):
-        devices = self.tDeviceManager.getDevices()
-        self.initializeBlankSvg()
-
         self.drawAccelerator()
-        self.drawIcons(devices)
-        self.drawDevices(devices)
+
+        if TangoDeviceManager.canConnectToTango():
+            self.tDeviceManager = TangoDeviceManager()
+            if self.tDeviceManager.initialized:
+                devices = self.tDeviceManager.getDevices()
+                self.drawIcons(devices)
+                self.drawDevices(devices)
 
     def initializeBlankSvg(self):
         blankSVGpath = '../src/blank.svg'

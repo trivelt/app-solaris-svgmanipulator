@@ -42,14 +42,18 @@ class SVG:
 
     def getElementById(self, elementName, parentNode):
         searchElement = None
+        if parentNode == None:
+            return searchElement
         for element in parentNode:
             if "id" in element.attrib and element.attrib["id"] == elementName:
                 searchElement = element
         return searchElement
 
     def getElementByLabel(self, elementName, parentNode):
-        label = "{http://www.inkscape.org/namespaces/inkscape}label"
         searchedNode = None
+        if parentNode == None:
+            return searchedNode
+        label = "{http://www.inkscape.org/namespaces/inkscape}label"
         for group in parentNode:
             if label in group.attrib and group.attrib[label] == elementName:
                 searchedNode = group

@@ -72,9 +72,12 @@ class Device:
         svgRoot = svgFile.getSvg()
         subsystemNode = svgFile.getSubsystemZoomNode(self.subsystemName)
 
-        self.drawDeviceIcon(subsystemNode)
-        if SettingsCloud.getParameter("deviceCaptions") == True:
-            self.drawDeviceCaption(subsystemNode)
+        if subsystemNode != None:
+            self.drawDeviceIcon(subsystemNode)
+            if SettingsCloud.getParameter("deviceCaptions") == True:
+                self.drawDeviceCaption(subsystemNode)
+        else:
+            print "Device " + self.name + " can not be added - wrong subsystem name"
 
     def drawDeviceIcon(self, parentNode):
         deviceElement = etree.SubElement(parentNode, "use")

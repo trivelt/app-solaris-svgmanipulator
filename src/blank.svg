@@ -130,16 +130,6 @@
          class="zoom level0"
          inkscape:label="zoom0"
          style="display:none">
-        <image
-           sodipodi:absref="/home/johfor/Dropbox/progg/tango-svgsynoptic/beamlinesMAXXIV.png"
-           xlink:href="file:///home/johfor/Dropbox/progg/tango-svgsynoptic/beamlinesMAXXIV.png"
-           width="16919.383"
-           height="9663.2354"
-           preserveAspectRatio="none"
-           id="image14128"
-           x="54.423969"
-           y="5.1524601"
-           style="fill:#ffff00;display:none" />
         <circle
            style="opacity:0.25;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:1.25;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
            id="path5122"
@@ -152,7 +142,7 @@
            sodipodi:ry="3269.6619"
            d="m 15269.662,4787.8818 c 0,1805.7844 -1463.878,3269.6619 -3269.662,3269.6619 -1805.784,0 -3269.6619,-1463.8775 -3269.6619,-3269.6619 0,-1805.7843 1463.8779,-3269.6618 3269.6619,-3269.6618 1805.784,0 3269.662,1463.8775 3269.662,3269.6618 z">
           <desc
-             id="desc5124">section=R3</desc>
+             id="desc5124">section=R1</desc>
         </circle>
         <flowRoot
            xml:space="preserve"
@@ -186,11 +176,6 @@
            sodipodi:rx="2645.4143"
            sodipodi:ry="2645.4143"
            d="m 14634.49,4827.0225 c 0,1461.0219 -1184.393,2645.4143 -2645.415,2645.4143 -1461.022,0 -2645.4141,-1184.3924 -2645.4141,-2645.4143 0,-1461.022 1184.3921,-2645.4143 2645.4141,-2645.4143 1461.022,0 2645.415,1184.3923 2645.415,2645.4143 z" />
-        <path
-           style="fill:none;stroke:#b5b5b5;stroke-width:110.05086517;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-           d="m 12369.835,7891.0317 c 385.894,-295.3746 771.786,-590.7494 1157.678,-886.1239"
-           id="path14139"
-           inkscape:connector-curvature="0" />
         <rect
            style="opacity:0.25;fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.60062957;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
            id="rect5110"

@@ -35,6 +35,11 @@ class TangoDeviceManager:
         self.getAttributesFromDbAndAssignToDevices()
         return self.devices
 
+    def getDevicesWithoutParameters(self):
+        allTangoDevices = self.getAllDevicesFromDatabase()
+        self.filterDevices(allTangoDevices)
+        return self.devices
+
     def getAllDevicesFromDatabase(self):
         servers = self.database.get_server_list()
         allTangoDevices = []
@@ -86,3 +91,10 @@ class TangoDeviceManager:
                 device.realCoordinates = [xCoord, yCoord]
         for device in deviceToRemove:
             self.devices.remove(device)
+
+    def putDeviceParametersIntoDb(self, device):
+        iconPath = device.icon.path
+        [xCoord, yCoord] = device.realCoordinates
+
+        proxyDevice = PyTango.DeviceProxy(device.name)
+        proxyDevice.put_property({"x":xCoord, "y":yCoord, "icon":iconPath})

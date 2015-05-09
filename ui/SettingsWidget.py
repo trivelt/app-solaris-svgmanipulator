@@ -82,8 +82,13 @@ class SettingsWidget(QWidget):
         showDeviceCaptionsLabel.setText("Show device captions:")
         showDeviceCaptionsLabel.setFixedWidth(500)
         self.showDeviceCaptionsCheckBox = QCheckBox(self)
-        self.showDeviceCaptionsCheckBox.setChecked(True)
         self.putInHorizontalLayout(showDeviceCaptionsLabel, self.showDeviceCaptionsCheckBox)
+
+        useDbParametersLabel = QLabel(self)
+        useDbParametersLabel.setText("Use parameters from database")
+        useDbParametersLabel.setFixedWidth(500)
+        self.useDbParametersCheckBox = QCheckBox(self)
+        self.putInHorizontalLayout(useDbParametersLabel, self.useDbParametersCheckBox)
 
         self.setDefaultSettings()
 
@@ -102,6 +107,8 @@ class SettingsWidget(QWidget):
         self.ringSubsectionSizeSpinBox.setValue(33.33)
         self.centerCoordinatesEditX.setText("300")
         self.centerCoordinatesEditY.setText("500")
+        self.showDeviceCaptionsCheckBox.setChecked(True)
+        self.useDbParametersCheckBox.setChecked(True)
 
     def saveSettings(self):
         sectionFirstColor = self.sectionColorChooser.getSelectedColor()
@@ -115,6 +122,7 @@ class SettingsWidget(QWidget):
         centerCoordinateX = self.centerCoordinatesEditX.text()
         centerCoordinateY = self.centerCoordinatesEditY.text()
         deviceCaptions = bool(self.showDeviceCaptionsCheckBox.isChecked())
+        parametersFromDb = bool(self.useDbParametersCheckBox.isChecked())
 
         SettingsCloud.setParameter("sectionFirstColor", sectionFirstColor)
         SettingsCloud.setParameter("sectionSecondColor", sectionSecondColor)
@@ -127,3 +135,4 @@ class SettingsWidget(QWidget):
         SettingsCloud.setParameter("centerCoordinateX", centerCoordinateX)
         SettingsCloud.setParameter("centerCoordinateY", centerCoordinateY)
         SettingsCloud.setParameter("deviceCaptions", deviceCaptions)
+        SettingsCloud.setParameter("parameterFromDb", parametersFromDb)

@@ -30,12 +30,14 @@ class TangoDeviceManager:
         return True
 
     def getDevices(self):
+        self.devices = list()
         allTangoDevices = self.getAllDevicesFromDatabase()
         self.filterDevices(allTangoDevices)
         self.getAttributesFromDbAndAssignToDevices()
         return self.devices
 
     def getDevicesWithoutParameters(self):
+        self.devices = list()
         allTangoDevices = self.getAllDevicesFromDatabase()
         self.filterDevices(allTangoDevices)
         return self.devices

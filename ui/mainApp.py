@@ -6,8 +6,10 @@ from PyQt4.QtGui import QMainWindow, QApplication
 from PyQt4 import QtCore
 from SecondStepWidget import SecondStepWidget
 from FirstStepWidget import FirstStepWidget
+from SecondAndHalfStepWidget import SecondAndHalfStepWidget
 from ThirdStepWidget import ThirdStepWidget
 from SectionsDataProcessor import SectionsDataProcesssor
+from SettingsWidget import SettingsCloud
 
 class mainApp(QMainWindow):
     def __init__(self, parent=None):
@@ -15,34 +17,51 @@ class mainApp(QMainWindow):
 
         self.firstStep = FirstStepWidget()
         self.secondStep = SecondStepWidget()
+        self.secondAndHalfStep = SecondAndHalfStepWidget()
         self.thirdStep = ThirdStepWidget()
         self.setCentralWidget(self.firstStep)
 
         self.connect(self.firstStep, QtCore.SIGNAL("nextStep()"), self.showSecondStepAfterFirst)
         self.connect(self.secondStep, QtCore.SIGNAL("previousStep()"), self.showFirstStep)
-        self.connect(self.secondStep, QtCore.SIGNAL("nextStep()"), self.showThirdStep)
-        self.connect(self.thirdStep, QtCore.SIGNAL("previousStep()"), self.showSecondStepAfterThird)
+        self.connect(self.secondStep, QtCore.SIGNAL("nextStep()"), self.showStepAfterSecond)
+        self.connect(self.secondAndHalfStep, QtCore.SIGNAL("previousStep()"), self.showSecondStepAfterSecondAndHalf)
+        self.connect(self.secondAndHalfStep, QtCore.SIGNAL("nextStep()"), self.showThirdStep)
+        self.connect(self.thirdStep, QtCore.SIGNAL("previousStep()"), self.showStepBeforeThird)
         self.connect(self.thirdStep, QtCore.SIGNAL("loadDevices()"), self.loadDevices)
-
-    def showFirstStep(self):
-        self.secondStep.setParent(None)
-        self.setCentralWidget(self.firstStep)
 
     def showSecondStepAfterFirst(self):
         self.firstStep.setParent(None)
         self.updateDefaultParameters()
         self.setCentralWidget(self.secondStep)
 
+    def showFirstStep(self):
+        self.secondStep.setParent(None)
+        self.setCentralWidget(self.firstStep)
+
     def updateDefaultParameters(self):
         self.firstStep.saveSettings()
 
-    def showSecondStepAfterThird(self):
-        self.thirdStep.setParent(None)
+    def showStepAfterSecond(self):
+        self.secondStep.setParent(None)
+        if SettingsCloud.getParameter("parameterFromDb"):
+            self.setCentralWidget(self.thirdStep)
+        else:
+            self.setCentralWidget(self.secondAndHalfStep)
+
+    def showSecondStepAfterSecondAndHalf(self):
+        self.secondAndHalfStep.setParent(None)
         self.setCentralWidget(self.secondStep)
 
     def showThirdStep(self):
-        self.secondStep.setParent(None)
+        self.secondAndHalfStep.setParent(None)
         self.setCentralWidget(self.thirdStep)
+
+    def showStepBeforeThird(self):
+        self.thirdStep.setParent(None)
+        if SettingsCloud.getParameter("parameterFromDb"):
+            self.setCentralWidget(self.secondStep)
+        else:
+            self.setCentralWidget(self.secondAndHalfStep)
 
     def loadDevices(self):
         svgDrawer = SvgDrawer()

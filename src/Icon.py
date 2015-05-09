@@ -20,9 +20,9 @@ class Icon:
     def updateName(self):
         pathElements = self.path.split("/")
         if len(pathElements):
-            self.name = pathElements[-1]
+            self.name = str(pathElements[-1])
         else:
-            self.name = self.path
+            self.name = str(self.path)
         self.cutExtensionInName()
 
     def cutExtensionInName(self):

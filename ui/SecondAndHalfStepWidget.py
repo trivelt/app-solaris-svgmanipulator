@@ -131,11 +131,11 @@ class SecondAndHalfStepWidget(QWidget):
 
     def processRingSection(self, sectionOrderWidget, number):
         sortedDevices = sectionOrderWidget.getSortedDevices()
-        deviceNumber = 1
+        deviceNumber = 0
         baseAngle = (360.0 / len(self.deviceOrderWidgets)) * number
         for device in sortedDevices:
             angle = baseAngle + deviceNumber
             [xCoord, yCoord] = ArcDrawingTools.polarToCartesian(0, 0, 1, angle)
             device.realCoordinates = [float(xCoord), float(yCoord)]
             self.tDeviceManager.putDeviceParametersIntoDb(device)
-            deviceNumber += 1
+            deviceNumber -= 1

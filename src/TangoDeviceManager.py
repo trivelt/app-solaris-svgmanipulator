@@ -99,4 +99,4 @@ class TangoDeviceManager:
         [xCoord, yCoord] = device.realCoordinates
 
         proxyDevice = PyTango.DeviceProxy(device.name)
-        proxyDevice.put_property({"x":xCoord, "y":yCoord, "icon":iconPath})
+        proxyDevice.put_property({"x":xCoord, "y":yCoord, "icon":str(iconPath)})

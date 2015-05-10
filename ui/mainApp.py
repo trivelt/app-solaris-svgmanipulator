@@ -47,6 +47,10 @@ class mainApp(QMainWindow):
             self.setCentralWidget(self.thirdStep)
         else:
             self.setCentralWidget(self.secondAndHalfStep)
+            linacData = self.secondStep.getLinacData()
+            ringData = self.secondStep.getRingData()
+            self.secondAndHalfStep.setSectionsData(linacData, ringData)
+            self.secondAndHalfStep.createDeviceWidgets()
 
     def showSecondStepAfterSecondAndHalf(self):
         self.secondAndHalfStep.setParent(None)

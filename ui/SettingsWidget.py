@@ -105,8 +105,8 @@ class SettingsWidget(QWidget):
         self.linacSubsectionSizeSpinBox.setValue(50)
         self.ringSectionSizeSpinBox.setValue(25)
         self.ringSubsectionSizeSpinBox.setValue(33.33)
-        self.centerCoordinatesEditX.setText("300")
-        self.centerCoordinatesEditY.setText("500")
+        self.centerCoordinatesEditX.setText("0")
+        self.centerCoordinatesEditY.setText("0")
         self.showDeviceCaptionsCheckBox.setChecked(True)
         self.useDbParametersCheckBox.setChecked(True)
 

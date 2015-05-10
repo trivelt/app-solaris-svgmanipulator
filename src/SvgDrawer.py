@@ -84,3 +84,9 @@ class SvgDrawer:
     def drawDevicesOnSvg(self, devices):
         for device in devices:
             device.updateSvg()
+
+    def getAllSections(self):
+        sections = list()
+        sections.extend(self.linac.sections)
+        sections.extend(self.ring.sections)
+        return sections

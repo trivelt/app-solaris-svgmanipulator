@@ -17,7 +17,7 @@ class IconChooser(QLabel):
     def updateLabelIcon(self):
         htmlText = "<img src='"
         htmlText += str(self.selectedIcon)
-        htmlText += "' with='40' height='40'/>"
+        htmlText += "' with='20' height='20'/>"
         # print "Updating with " + htmlText
         self.setText(htmlText)
         self.emit(QtCore.SIGNAL("iconUpdated()"))

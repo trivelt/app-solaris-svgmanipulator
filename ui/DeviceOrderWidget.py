@@ -60,7 +60,7 @@ class DeviceOrderWidget(QWidget):
         self.deviceWidgets.append(newWidget)
         self.layout.addWidget(newWidget)
 
-        self.widgetHeight += 100
+        self.widgetHeight += 70
         self.containerWidget.resize(530, self.widgetHeight)
 
         self.connect(newWidget, QtCore.SIGNAL("up()"), self.upWidget)

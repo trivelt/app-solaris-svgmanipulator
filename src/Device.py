@@ -125,6 +125,8 @@ class Device:
         nameParts = self.name.split("-")
         if len(nameParts) > 0:
             return nameParts[-1]
+        else:
+            return self.name
 
     def isRingElement(self):
         return self.getSectionName().startswith("R1-")

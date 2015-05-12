@@ -45,7 +45,9 @@ class DeviceOrderWidget(QWidget):
 
     def setSection(self, section):
         self.section = section
-        for device in section.devices:
+        devices = section.devices
+        devices = sorted(devices, key=lambda device: device.getShortName())
+        for device in devices:
             self.addNewDeviceWidget(device)
 
     def addNewDeviceWidget(self, device=None):

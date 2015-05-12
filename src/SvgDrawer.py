@@ -11,9 +11,6 @@ class SvgDrawer:
         self.tDeviceManager = None
         self.svgFile = None
 
-    def setTangoHost(self, tangoHost):
-        TangoDeviceManager.setTangoDatabaseAddress(tangoHost)
-
     def loadSvg(self, svgPath):
         svgTree = etree.parse(svgPath)
         self.svgFile = svg.SVG()

@@ -5,6 +5,7 @@ from PyQt4.QtGui import QPushButton, QLabel , QWidget, QLineEdit, QHBoxLayout, Q
 from PyQt4.QtCore import QRect, Qt
 from ColorChooser import ColorChooser
 from src.SettingsCloud import SettingsCloud
+from src.TangoDeviceManager import TangoDeviceManager
 
 class SettingsWidget(QWidget):
     def __init__(self, parent=None):
@@ -90,6 +91,14 @@ class SettingsWidget(QWidget):
         self.useDbParametersCheckBox = QCheckBox(self)
         self.putInHorizontalLayout(useDbParametersLabel, self.useDbParametersCheckBox)
 
+        tangoHostLabel = QLabel(self)
+        tangoHostLabel.setText("Tango Host")
+        self.tangoHostEdit = QLineEdit(self)
+        self.tangoHostEdit.setFixedHeight(25)
+        self.tangoHostEdit.setText("127.0.0.1:10000")
+        self.tangoHostEdit.setStyleSheet("font-size:18px;")
+        self.putInHorizontalLayout(tangoHostLabel, self.tangoHostEdit)
+
         self.setDefaultSettings()
 
     def putInHorizontalLayout(self, label, edit, secondEdit=None):
@@ -123,6 +132,7 @@ class SettingsWidget(QWidget):
         centerCoordinateY = float(self.centerCoordinatesEditY.text())
         deviceCaptions = bool(self.showDeviceCaptionsCheckBox.isChecked())
         parametersFromDb = bool(self.useDbParametersCheckBox.isChecked())
+        tangoHost = str(self.tangoHostEdit.text())
 
         SettingsCloud.setParameter("sectionFirstColor", sectionFirstColor)
         SettingsCloud.setParameter("sectionSecondColor", sectionSecondColor)
@@ -136,3 +146,4 @@ class SettingsWidget(QWidget):
         SettingsCloud.setParameter("centerCoordinateY", centerCoordinateY)
         SettingsCloud.setParameter("deviceCaptions", deviceCaptions)
         SettingsCloud.setParameter("parameterFromDb", parametersFromDb)
+        TangoDeviceManager.setTangoDatabaseAddress(tangoHost)

@@ -70,7 +70,6 @@ class mainApp(QMainWindow):
     def loadDevices(self):
         svgDrawer = SvgDrawer()
         svgDrawer.loadSvg(self.getBaseSvgPath())
-        svgDrawer.setTangoHost(self.thirdStep.getTangoHost())
 
         self.processSectionsData(svgDrawer)
 

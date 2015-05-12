@@ -40,15 +40,11 @@ class SecondAndHalfStepWidget(QWidget):
         nextStepButton.setFixedWidth(500)
         self.layout.addWidget(nextStepButton, 0, 1, QtCore.Qt.AlignHCenter)
         self.connect(nextStepButton, QtCore.SIGNAL("clicked()"), self.saveSettingsBeforeNextStep)
-        #self.connect(nextStepButton, QtCore.SIGNAL("clicked()"), QtCore.SIGNAL("nextStep()"))
 
-        tangoHostLabel = QLabel(self)
-        tangoHostLabel.setText("Tango Host: ")
-        self.layout.addWidget(tangoHostLabel, 1, 0, QtCore.Qt.AlignTop)
-
-        self.tangoHostEdit = QLineEdit(self)
-        self.tangoHostEdit.setText("127.0.0.1:10000")
-        self.layout.addWidget(self.tangoHostEdit, 1, 1, QtCore.Qt.AlignTop)
+        self.sectionLabel = QLabel(self)
+        self.sectionLabel.setText("")
+        self.sectionLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.layout.addWidget(self.sectionLabel, 1, 0, 1, -1, QtCore.Qt.AlignTop | QtCore.Qt.AlignHCenter)
 
         previousSectionButton = QPushButton(self)
         previousSectionButton.setText("Previous section")
@@ -74,7 +70,14 @@ class SecondAndHalfStepWidget(QWidget):
         self.currentWidgetIndex += diff
         self.layout.addWidget(self.deviceOrderWidgets[self.currentWidgetIndex], 3, 0, 1, -1, QtCore.Qt.AlignHCenter)
         self.deviceOrderWidgets[self.currentWidgetIndex].setVisible(True)
+        self.showSectionName()
 
+    def showSectionName(self):
+        sectionWidget = self.deviceOrderWidgets[self.currentWidgetIndex]
+        sectionName = sectionWidget.section.longName
+        labelString = "Section "
+        labelString += sectionName
+        self.sectionLabel.setText(labelString)
 
     def setSectionsData(self, linacData, ringData):
         self.svgDrawer = SvgDrawer()
@@ -85,8 +88,6 @@ class SecondAndHalfStepWidget(QWidget):
 
     def createDeviceWidgets(self):
         self.clearWidgets()
-
-        self.tDeviceManager.setTangoDatabaseAddress(str(self.tangoHostEdit.text()))
         devices = self.tDeviceManager.getDevicesWithoutParameters()
         self.svgDrawer.addDeviceToAccelerator(devices)
         for section in self.sections:
@@ -98,6 +99,7 @@ class SecondAndHalfStepWidget(QWidget):
             self.currentWidgetIndex = 0
             self.deviceOrderWidgets[0].setVisible(True)
             self.layout.addWidget(self.deviceOrderWidgets[0], 3, 0, 1, -1, QtCore.Qt.AlignHCenter)
+            self.showSectionName()
 
     def clearWidgets(self):
         for widget in self.deviceOrderWidgets:

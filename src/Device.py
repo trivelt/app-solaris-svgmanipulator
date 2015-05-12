@@ -18,6 +18,9 @@ class Device:
 
         self.findAndSetSubsystemName()
 
+    def __repr__(self):
+        return "(" + self.name + ")"
+
     def findAndSetSubsystemName(self):
         nameParts = self.name.split("/")
         if len(nameParts) > 1:
